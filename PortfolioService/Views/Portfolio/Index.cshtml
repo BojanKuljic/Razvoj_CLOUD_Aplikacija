@@ -1,0 +1,41 @@
+﻿@model PortfolioService.Models.PortfolioViewModel
+
+@{
+    ViewBag.Title = "Portfolio";
+}
+
+@if (Session["User"] != null)
+{
+    <h1>Your Portfolio</h1>
+    <h2>Welcome @Session["User"]</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Value</th>
+                <th>Profit/Loss</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var holding in Model.Holdings)
+            {
+                <tr>
+                    <td>@holding.Name</td>
+                    <td>@holding.Amount</td>
+                    <td>@holding.Value</td>
+                    <td>@holding.ProfitOrLoss</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p>Total Value: @Model.TotalValue</p>
+    <p>Total Profit/Loss: @Model.TotalProfitOrLoss</p>
+
+}
+else
+{
+    <h1>Login or reqister to access your portfolio</h1>
+}

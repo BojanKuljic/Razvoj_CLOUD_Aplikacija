@@ -1,0 +1,25 @@
+﻿@model PortfolioService.Models.SetAlertViewModel
+
+@{
+    ViewBag.Title = "Set Alert";
+}
+
+<h2>Set Alert for Cryptocurrency</h2>
+
+@using (Html.BeginForm("SetAlert", "Portfolio", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(m => m.CryptocurrencyName)
+        @Html.TextBoxFor(m => m.CryptocurrencyName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.AlertThreshold)
+        @Html.TextBoxFor(m => m.AlertThreshold, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Set Alert</button>
+}

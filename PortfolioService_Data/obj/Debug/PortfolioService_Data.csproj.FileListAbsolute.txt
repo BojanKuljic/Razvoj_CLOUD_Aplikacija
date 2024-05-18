@@ -1,0 +1,13 @@
+D:\CLOUD\Portfolio\PortfolioService_Data\bin\Debug\PortfolioService_Data.dll
+D:\CLOUD\Portfolio\PortfolioService_Data\bin\Debug\PortfolioService_Data.pdb
+D:\CLOUD\Portfolio\PortfolioService_Data\bin\Debug\Microsoft.WindowsAzure.Configuration.dll
+D:\CLOUD\Portfolio\PortfolioService_Data\bin\Debug\Microsoft.WindowsAzure.Storage.dll
+D:\CLOUD\Portfolio\PortfolioService_Data\bin\Debug\Microsoft.Data.Edm.dll
+D:\CLOUD\Portfolio\PortfolioService_Data\bin\Debug\Microsoft.Data.Services.Client.dll
+D:\CLOUD\Portfolio\PortfolioService_Data\bin\Debug\Microsoft.Data.OData.dll
+D:\CLOUD\Portfolio\PortfolioService_Data\bin\Debug\Microsoft.WindowsAzure.Configuration.xml
+D:\CLOUD\Portfolio\PortfolioService_Data\obj\Debug\PortfolioService_Data.csproj.CoreCompileInputs.cache
+D:\CLOUD\Portfolio\PortfolioService_Data\obj\Debug\PortfolioService_Data.csproj.CopyComplete
+D:\CLOUD\Portfolio\PortfolioService_Data\obj\Debug\PortfolioService_Data.dll
+D:\CLOUD\Portfolio\PortfolioService_Data\obj\Debug\PortfolioService_Data.pdb
+D:\CLOUD\Portfolio\PortfolioService_Data\obj\Debug\PortfolioService_Data.csprojAssemblyReference.cache

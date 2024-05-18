@@ -1,0 +1,38 @@
+﻿@model PortfolioService.Models.SearchViewModel
+
+@{
+    ViewBag.Title = "Search Cryptocurrencies";
+}
+
+<h2>Search Cryptocurrencies</h2>
+
+@using (Html.BeginForm("Search", "Portfolio", FormMethod.Get))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.SearchQuery)
+        @Html.TextBoxFor(m => m.SearchQuery, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+}
+
+@if (Model.Results != null)
+{
+    <h3>Results</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Current Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var result in Model.Results)
+            {
+                <tr>
+                    <td>@result.Name</td>
+                    <td>@result.CurrentPrice</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
