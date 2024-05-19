@@ -20,9 +20,9 @@ namespace PortfolioService_Data
         public enum TransactionType { purchase, sell };
 
         public string Name { get; set; }
-        public decimal Amount { get; set; }
+        public double Amount { get; set; }
         public TransactionType Type { get; set; }
-        public decimal PurchaseOrSellValueInUSD { get; set; }
+        public double PurchaseOrSellValueInUSD { get; set; }
         public DateTime TransactionDate { get; set; }
     }
 

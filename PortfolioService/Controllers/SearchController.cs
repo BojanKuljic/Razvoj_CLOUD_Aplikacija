@@ -24,8 +24,8 @@ namespace PortfolioService.Controllers
                 SearchQuery = searchQuery,
                 Results = new List<Cryptocurrency>
                 {
-                    new Cryptocurrency { Name = "Bitcoin", CurrentPrice = 50000m },
-                    new Cryptocurrency { Name = "Ethereum", CurrentPrice = 3000m }
+                    new Cryptocurrency { Name = "Bitcoin", CurrentPrice = 50000 },
+                    new Cryptocurrency { Name = "Ethereum", CurrentPrice = 3000 }
                 }
             };
 

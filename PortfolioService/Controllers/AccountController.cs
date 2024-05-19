@@ -42,7 +42,7 @@ namespace PortfolioService.Controllers
                     Country = model.Country,
                     PhoneNumber = model.PhoneNumber,
                     ProfilePicture = model.ProfilePicture,
-                    PasswordHash = model.Password 
+                    PasswordHash = model.Password,
                     TransactionIDs = new List<string>(),
                 };
 
