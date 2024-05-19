@@ -202,6 +202,7 @@
     <Content Include="Views\Portfolio\Index.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\SetAlert\Index.cshtml" />
+    <Content Include="Views\Account\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

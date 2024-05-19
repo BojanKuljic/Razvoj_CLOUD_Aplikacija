@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "EditProfile";
+}
+
+@if (Session["User"] != null) {
+    <h1>Edit profile</h1>
+
+    <form action="~/Account/ApplyProfileEdit" method="post">
+        <table>
+            <tr>
+                <td>First name:</td>
+                <td><input type="text" name="FirstName" value="@ViewBag.User.FirstName"></td>
+            </tr>
+
+            <tr>
+                <td>Last name:</td>
+                <td><input type="text" name="LastName" value="@ViewBag.User.LastName"></td>
+            </tr>
+
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" name="Email" value="@ViewBag.User.Email"></td>
+            </tr>
+
+            <tr>
+                <td>Address:</td>
+                <td><input type="text" name="Address" value="@ViewBag.User.Address"></td>
+            </tr>
+
+            <tr>
+                <td>City:</td>
+                <td><input type="text" name="City" value="@ViewBag.User.City"></td>
+            </tr>
+
+            <tr>
+                <td>Country</td>
+                <td><input type="text" name="Country" value="@ViewBag.User.Country"></td>
+            </tr>
+
+            <tr>
+                <td>Phone number:</td>
+                <td><input type="text" name="PhoneNumber" value="@ViewBag.User.PhoneNumber"></td>
+            </tr>
+
+            <tr>
+                <td>Profile picture:</td>
+                <td><input type="text" name="ProfilePicture" value="@ViewBag.User.ProfilePicture"></td>
+            </tr>
+
+            <tr>
+                <td><p></p></td>
+                <td><p></p></td>
+            </tr>
+
+            <tr>
+                <td style="padding-right:10px">New password:</td>
+                <td><input type="password" name="NewPassword"></td>
+            </tr>
+        </table>
+
+        <br />
+
+        <input type="submit" value="Apply changes">
+            
+        @if (ViewBag.Edited) {
+            <p>Profile data successfully edited</p>
+         }
+    </form>
+} else {
+    <h1>Login or reqister to access your portfolio</h1>
+}

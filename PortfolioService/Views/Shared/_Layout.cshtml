@@ -15,16 +15,14 @@
         <nav>
             <ul>
                 <li>@Html.ActionLink("Portfolio", "Index", "Portfolio")</li>
-                @if (Session["User"] == null)
-                {
+                @if (Session["User"] == null) {
                     <li>@Html.ActionLink("Register", "Register", "Account")</li>
                     <li>@Html.ActionLink("Login", "Login", "Account")</li>
-                }
-                else
-                {
+                } else {
                     <li>@Html.ActionLink("Search", "Index", "Search")</li>
                     <li>@Html.ActionLink("Set Alert", "Index", "SetAlert")</li>
                     <li>@Html.ActionLink("Log out", "Logout", "Account")</li>
+                    <li>@Html.ActionLink("Edit profile", "EditProfile", "Account")</li>
                 }
             </ul>
         </nav>

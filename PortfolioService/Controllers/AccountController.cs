@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using PortfolioService_Data;
 using PortfolioService.Models;
+using System.Web.WebPages;
 
 namespace PortfolioService.Controllers
 {
@@ -84,5 +85,45 @@ namespace PortfolioService.Controllers
             return RedirectToAction("Index", "Portfolio");
         }
 
+        [HttpGet]
+        public ActionResult EditProfile() {
+            if (Session["User"] != null) {
+                ViewBag.User = _userTableService.RetrieveUser((string)Session["User"]);
+            }
+
+            ViewBag.Edited = false;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ApplyProfileEdit() {
+            User oldUser = _userTableService.RetrieveUser((string)Session["User"]);
+            _userTableService.DeleteUser(oldUser);
+
+            User newUser = new User(Request["Email"]);
+            newUser.FirstName = Request["FirstName"];
+            newUser.LastName = Request["LastName"];
+            newUser.Email = Request["Email"];
+            newUser.Address = Request["Address"];
+            newUser.City = Request["City"];
+            newUser.Country = Request["Country"];
+            newUser.PhoneNumber = Request["PhoneNumber"];
+            newUser.ProfilePicture = Request["ProfilePicture"];
+
+            if (Request["Password"].IsEmpty()) {
+                newUser.PasswordHash = oldUser.PasswordHash;
+            } else {
+                newUser.PasswordHash = Request["PasswordHash"];
+            }
+            
+            _userTableService.InsertOrMergeUser(newUser);
+
+            Session["User"] = newUser.Email;
+            ViewBag.User = newUser;
+            ViewBag.Edited = true;
+
+            return View("EditProfile");
+        }
     }
 }
