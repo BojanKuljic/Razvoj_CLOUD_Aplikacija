@@ -11,3 +11,16 @@ D:\CLOUD\Portfolio\PortfolioService_Data\obj\Debug\PortfolioService_Data.csproj.
 D:\CLOUD\Portfolio\PortfolioService_Data\obj\Debug\PortfolioService_Data.dll
 D:\CLOUD\Portfolio\PortfolioService_Data\obj\Debug\PortfolioService_Data.pdb
 D:\CLOUD\Portfolio\PortfolioService_Data\obj\Debug\PortfolioService_Data.csprojAssemblyReference.cache
+C:\Users\milen\Desktop\Portfolio\PortfolioService_Data\bin\Debug\PortfolioService_Data.dll
+C:\Users\milen\Desktop\Portfolio\PortfolioService_Data\bin\Debug\PortfolioService_Data.pdb
+C:\Users\milen\Desktop\Portfolio\PortfolioService_Data\bin\Debug\Microsoft.WindowsAzure.Configuration.dll
+C:\Users\milen\Desktop\Portfolio\PortfolioService_Data\bin\Debug\Microsoft.WindowsAzure.Storage.dll
+C:\Users\milen\Desktop\Portfolio\PortfolioService_Data\bin\Debug\Microsoft.Data.Edm.dll
+C:\Users\milen\Desktop\Portfolio\PortfolioService_Data\bin\Debug\Microsoft.Data.Services.Client.dll
+C:\Users\milen\Desktop\Portfolio\PortfolioService_Data\bin\Debug\Microsoft.Data.OData.dll
+C:\Users\milen\Desktop\Portfolio\PortfolioService_Data\bin\Debug\Microsoft.WindowsAzure.Configuration.xml
+C:\Users\milen\Desktop\Portfolio\PortfolioService_Data\obj\Debug\PortfolioService_Data.csprojAssemblyReference.cache
+C:\Users\milen\Desktop\Portfolio\PortfolioService_Data\obj\Debug\PortfolioService_Data.csproj.CoreCompileInputs.cache
+C:\Users\milen\Desktop\Portfolio\PortfolioService_Data\obj\Debug\PortfolioService_Data.csproj.CopyComplete
+C:\Users\milen\Desktop\Portfolio\PortfolioService_Data\obj\Debug\PortfolioService_Data.dll
+C:\Users\milen\Desktop\Portfolio\PortfolioService_Data\obj\Debug\PortfolioService_Data.pdb

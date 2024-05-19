@@ -5,18 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
-using Microsoft.WindowsAzure;
-using System.Web;
-using Microsoft.Azure;
 
 namespace PortfolioService_Data
 {
-    public class UserDataRepository
+    public class CryptocurrencyDataRepository
     {
         private CloudStorageAccount _storageAccount;
         private CloudTable _table;
 
-        public UserDataRepository()
+        public CryptocurrencyDataRepository()
         {
             _storageAccount = CloudStorageAccount.Parse("UseDevelopmentStorage=true"); //var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("DataConnectionString"));
             CloudTableClient tableClient = new CloudTableClient(new Uri(_storageAccount.TableEndpoint.AbsoluteUri), _storageAccount.Credentials);
@@ -28,24 +25,25 @@ namespace PortfolioService_Data
             _table.CreateIfNotExists();
         }
 
-        public void InsertOrMergeUser(User user)
+        public void InsertOrMergeCryptocurrency(CryptocurrencyTransaction crypto, string email)
         {
-            user.RowKey = user.Email;
-            TableOperation insertOrMergeOperation = TableOperation.InsertOrMerge(user);
-            _table.Execute(insertOrMergeOperation);
+            crypto.RowKey = email;
+            TableOperation operation = TableOperation.InsertOrMerge(crypto);
+            _table.Execute(operation);
         }
 
-        public User RetrieveUser(string email)
+        public CryptocurrencyTransaction RetrieveCryptocurrency(string email)
         {
-            TableOperation retrieveOperation = TableOperation.Retrieve<User>("UserPartition", email);
+            TableOperation retrieveOperation = TableOperation.Retrieve<CryptocurrencyTransaction>("CryptoTransactionPartition", email);
             TableResult result = _table.Execute(retrieveOperation);
-            return result.Result as User;
+            return result.Result as CryptocurrencyTransaction;
         }
 
-        public void DeleteUser(User user)
+        public void DeleteCryptocurrency(CryptocurrencyTransaction crypto)
         {
-            TableOperation operation = TableOperation.Delete(user);
+            TableOperation operation = TableOperation.Delete(crypto);
             _table.Execute(operation);
         }
     }
+
 }

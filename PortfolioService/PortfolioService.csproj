@@ -152,6 +152,7 @@
     <Compile Include="Controllers\PortfolioController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SetAlertController.cs" />
+    <Compile Include="CryptoAPI.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

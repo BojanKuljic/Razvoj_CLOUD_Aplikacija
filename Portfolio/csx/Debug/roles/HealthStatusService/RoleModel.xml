@@ -24,14 +24,14 @@
     <Property name="SetConfiguration" value="Configuration=Debug" />
     <Property name="SetPlatform" value="Platform=AnyCPU" />
     <Property name="RoleTargetFramework" value="v4.5.1" />
-    <Property name="OutputDir" value="D:\CLOUD\Portfolio\Portfolio\obj\Debug\HealthStatusService\" />
+    <Property name="OutputDir" value="C:\Users\milen\Desktop\Portfolio\Portfolio\obj\Debug\HealthStatusService\" />
     <Property name="EntryPoint" value="HealthStatusService.dll" />
-    <Property name="SourceDir" value="D:\CLOUD\Portfolio\HealthStatusService\" />
-    <Property name="SitePhysicalPath" value="D:\CLOUD\Portfolio\HealthStatusService\" />
+    <Property name="SourceDir" value="C:\Users\milen\Desktop\Portfolio\HealthStatusService\" />
+    <Property name="SitePhysicalPath" value="C:\Users\milen\Desktop\Portfolio\HealthStatusService\" />
     <Property name="TargetRuntimeVersion" value="v4.0" />
   </Properties>
   <Sites>
-    <Site name="Web" physicalDirectory="D:\CLOUD\Portfolio\HealthStatusService\">
+    <Site name="Web" physicalDirectory="C:\Users\milen\Desktop\Portfolio\HealthStatusService\">
       <Bindings>
         <Binding name="Endpoint1" endpointName="Endpoint1" />
       </Bindings>
