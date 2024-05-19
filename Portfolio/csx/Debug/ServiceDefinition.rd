@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Portfolio" generation="1" functional="0" release="0" Id="4f7c9659-90b4-437b-896e-92628847694d" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Portfolio" generation="1" functional="0" release="0" Id="acadafa6-aac0-452b-a8da-933201c5004a" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="PortfolioGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -258,14 +258,14 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="a6bf0dc5-bc81-482f-8ee5-39586b7dcd29" ref="Microsoft.RedDog.Contract\ServiceContract\PortfolioContract@ServiceDefinition">
+    <implementation Id="24ee1601-3aa3-40ef-a743-6d13300bf784" ref="Microsoft.RedDog.Contract\ServiceContract\PortfolioContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="97b184e0-2b0f-4cd0-be05-c520cd0c3088" ref="Microsoft.RedDog.Contract\Interface\HealthStatusService:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="c3d004f5-5d13-4db9-b315-c21bf0f3c0fe" ref="Microsoft.RedDog.Contract\Interface\HealthStatusService:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/Portfolio/PortfolioGroup/HealthStatusService:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="14d456f6-b11f-48fb-8f76-c9fd6919c6d1" ref="Microsoft.RedDog.Contract\Interface\PortfolioService:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="ac79240b-ea0c-45b3-9dcf-fab7fdddb1a3" ref="Microsoft.RedDog.Contract\Interface\PortfolioService:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/Portfolio/PortfolioGroup/PortfolioService:Endpoint1" />
           </inPort>

@@ -114,7 +114,7 @@ namespace PortfolioService.Controllers
             if (Request["Password"].IsEmpty()) {
                 newUser.PasswordHash = oldUser.PasswordHash;
             } else {
-                newUser.PasswordHash = Request["PasswordHash"];
+                newUser.PasswordHash = Request["Password"];
             }
             
             _userTableService.InsertOrMergeUser(newUser);
