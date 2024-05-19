@@ -27,5 +27,6 @@ namespace PortfolioService_Data
         public string PhoneNumber { get; set; }
         public string ProfilePicture { get; set; }
         public string PasswordHash { get; set; }
+        public List<string> TransactionIDs { get; set; }
     }
 }

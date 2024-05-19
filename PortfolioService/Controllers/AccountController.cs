@@ -15,7 +15,7 @@ namespace PortfolioService.Controllers
 
         public AccountController()
         {
-            string storageConnectionString = System.Configuration.ConfigurationManager.AppSettings["DataConnectionString"];
+            //string storageConnectionString = System.Configuration.ConfigurationManager.AppSettings["DataConnectionString"];
             _userTableService = new UserDataRepository();
             _userTableService.Initialize();
         }
@@ -43,6 +43,7 @@ namespace PortfolioService.Controllers
                     PhoneNumber = model.PhoneNumber,
                     ProfilePicture = model.ProfilePicture,
                     PasswordHash = model.Password 
+                    TransactionIDs = new List<string>(),
                 };
 
                 _userTableService.InsertOrMergeUser(user);
@@ -110,6 +111,7 @@ namespace PortfolioService.Controllers
             newUser.Country = Request["Country"];
             newUser.PhoneNumber = Request["PhoneNumber"];
             newUser.ProfilePicture = Request["ProfilePicture"];
+            newUser.TransactionIDs = oldUser.TransactionIDs;
 
             if (Request["Password"].IsEmpty()) {
                 newUser.PasswordHash = oldUser.PasswordHash;

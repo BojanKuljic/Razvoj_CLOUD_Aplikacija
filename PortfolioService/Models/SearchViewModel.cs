@@ -14,6 +14,6 @@ namespace PortfolioService.Models
     public class Cryptocurrency
     {
         public string Name { get; set; }
-        public decimal CurrentPrice { get; set; }
+        public double CurrentPrice { get; set; }
     }
 }
