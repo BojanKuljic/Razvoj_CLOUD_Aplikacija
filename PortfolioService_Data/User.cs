@@ -25,7 +25,6 @@ namespace PortfolioService_Data
         public string City { get; set; }
         public string Country { get; set; }
         public string PhoneNumber { get; set; }
-        public string ProfilePicture { get; set; }
         public string PasswordHash { get; set; }
         public List<string> TransactionIDs { get; set; }
     }

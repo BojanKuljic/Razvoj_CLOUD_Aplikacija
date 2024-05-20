@@ -6,18 +6,26 @@ using System.Web;
 using PortfolioService_Data;
 using PortfolioService.Models;
 using System.Web.WebPages;
+using System.IO;
+using Microsoft.Azure;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage;
+using System.Reflection;
 
 namespace PortfolioService.Controllers
 {
     public class AccountController : Controller
     {
         private readonly UserDataRepository _userTableService;
+        private ProfilePictureRepository _profilePictureRepository;
 
         public AccountController()
         {
             //string storageConnectionString = System.Configuration.ConfigurationManager.AppSettings["DataConnectionString"];
             _userTableService = new UserDataRepository();
             _userTableService.Initialize();
+
+            _profilePictureRepository = new ProfilePictureRepository();
         }
 
         [HttpGet]
@@ -32,6 +40,17 @@ namespace PortfolioService.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (model.ProfilePicture != null && model.ProfilePicture.ContentLength > 0) {
+                    _profilePictureRepository.Create(model.Email, model.ProfilePicture);
+                } else {
+                    return Content(@"
+                                    <html>
+                                    <body>
+                                        <p>error slika</p>
+                                    </body>
+                                    </html>");
+                }
+
                 User user = new User(model.Email)
                 {
                     FirstName = model.FirstName,
@@ -41,7 +60,6 @@ namespace PortfolioService.Controllers
                     City = model.City,
                     Country = model.Country,
                     PhoneNumber = model.PhoneNumber,
-                    ProfilePicture = model.ProfilePicture,
                     PasswordHash = model.Password,
                     TransactionIDs = new List<string>(),
                 };
@@ -93,6 +111,7 @@ namespace PortfolioService.Controllers
             }
 
             ViewBag.Edited = false;
+            ViewBag.PictureUri = _profilePictureRepository.GetUri(ViewBag.User.Email);
 
             return View();
         }
@@ -110,15 +129,28 @@ namespace PortfolioService.Controllers
             newUser.City = Request["City"];
             newUser.Country = Request["Country"];
             newUser.PhoneNumber = Request["PhoneNumber"];
-            newUser.ProfilePicture = Request["ProfilePicture"];
-            newUser.TransactionIDs = oldUser.TransactionIDs;
+
+            HttpPostedFileBase picture = Request.Files["ProfilePicture"];
+            if (picture != null && picture.ContentLength > 0) {
+                _profilePictureRepository.Delete(oldUser.Email);
+                ViewBag.PictureUri = _profilePictureRepository.Create(newUser.Email, picture);
+            } else {
+                return Content(@"
+                                    <html>
+                                    <body>
+                                        <p>error slika</p>
+                                    </body>
+                                    </html>");
+            }
 
             if (Request["Password"].IsEmpty()) {
                 newUser.PasswordHash = oldUser.PasswordHash;
             } else {
                 newUser.PasswordHash = Request["Password"];
             }
-            
+
+            newUser.TransactionIDs = oldUser.TransactionIDs;
+
             _userTableService.InsertOrMergeUser(newUser);
 
             Session["User"] = newUser.Email;

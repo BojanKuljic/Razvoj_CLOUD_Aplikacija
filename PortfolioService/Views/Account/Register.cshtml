@@ -6,8 +6,7 @@
 
 <h2>Register</h2>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" })) {
     @Html.AntiForgeryToken()
     <div class="form-group">
         @Html.LabelFor(m => m.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -16,11 +15,20 @@
             @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
         </div>
     </div>
+
     <div class="form-group">
         @Html.LabelFor(m => m.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -59,7 +67,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.ProfilePicture, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.ProfilePicture, new { @class = "form-control" })
+            <input type="file" name="ProfilePicture" class="form-control" />
             @Html.ValidationMessageFor(m => m.ProfilePicture, "", new { @class = "text-danger" })
         </div>
     </div>
