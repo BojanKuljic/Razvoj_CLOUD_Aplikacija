@@ -11,8 +11,8 @@ namespace HealthStatusService.Controllers {
 
         [HttpGet]
         public ActionResult Index() {
-            ulong aliveCounter = 0;
-            ulong deadCounter = 0;
+            double aliveCounter = 0;
+            double deadCounter = 0;
 
             foreach (HealthCheck healthCheck in repo.ReadPortfolioServiceHealthChecksFromLast24Hours()) {
                 if (healthCheck.IsAlive) {
@@ -23,7 +23,6 @@ namespace HealthStatusService.Controllers {
             }
 
             ViewBag.UptimePercentage = (aliveCounter / (aliveCounter + deadCounter)) * 100;
-
             ViewBag.HealthChecks = repo.ReadPortfolioServiceHealthChecksFromLastHour();
 
             return View();

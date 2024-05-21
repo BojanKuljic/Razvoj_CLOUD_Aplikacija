@@ -51,7 +51,9 @@ namespace HealthMonitoringService {
 
             TableQuery<HealthCheck> query = new TableQuery<HealthCheck>().Where(combinedFilter);
 
-            return _table.ExecuteQuery(query);
+            var result = _table.ExecuteQuery(query).OrderBy(h => h.Timestamp);
+
+            return result;
         }
     }
 }

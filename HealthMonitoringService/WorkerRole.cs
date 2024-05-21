@@ -84,7 +84,7 @@ namespace HealthMonitoringService {
                     // TODO: slanje mejla
                 }
 
-                await Task.Delay(3000);
+                await Task.Delay(5000);
             }
         }
     }
