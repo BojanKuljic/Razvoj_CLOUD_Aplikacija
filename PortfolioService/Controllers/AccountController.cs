@@ -23,7 +23,6 @@ namespace PortfolioService.Controllers
         {
             //string storageConnectionString = System.Configuration.ConfigurationManager.AppSettings["DataConnectionString"];
             _userTableService = new UserDataRepository();
-            _userTableService.Initialize();
 
             _profilePictureRepository = new ProfilePictureRepository();
         }

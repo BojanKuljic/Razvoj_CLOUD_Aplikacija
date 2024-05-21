@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Portfolio" generation="1" functional="0" release="0" Id="3e4290e8-356d-4c1c-97c1-0ec8696ce70b" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Portfolio" generation="1" functional="0" release="0" Id="63ecfc88-db60-42f7-b737-8dc91518fdb6" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="PortfolioGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -28,11 +28,6 @@
         <aCS name="HealthMonitoringServiceInstances" defaultValue="[1,1,1]">
           <maps>
             <mapMoniker name="/Portfolio/PortfolioGroup/MapHealthMonitoringServiceInstances" />
-          </maps>
-        </aCS>
-        <aCS name="HealthStatusService:DataConnectionString" defaultValue="">
-          <maps>
-            <mapMoniker name="/Portfolio/PortfolioGroup/MapHealthStatusService:DataConnectionString" />
           </maps>
         </aCS>
         <aCS name="HealthStatusService:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
@@ -92,6 +87,16 @@
             <inPortMoniker name="/Portfolio/PortfolioGroup/PortfolioService/Endpoint1" />
           </toPorts>
         </lBChannel>
+        <sFSwitchChannel name="SW:NotificationService:health-monitoring">
+          <toPorts>
+            <inPortMoniker name="/Portfolio/PortfolioGroup/NotificationService/health-monitoring" />
+          </toPorts>
+        </sFSwitchChannel>
+        <sFSwitchChannel name="SW:PortfolioService:health-monitoring">
+          <toPorts>
+            <inPortMoniker name="/Portfolio/PortfolioGroup/PortfolioService/health-monitoring" />
+          </toPorts>
+        </sFSwitchChannel>
       </channels>
       <maps>
         <map name="MapHealthMonitoringService:DataConnectionString" kind="Identity">
@@ -107,11 +112,6 @@
         <map name="MapHealthMonitoringServiceInstances" kind="Identity">
           <setting>
             <sCSPolicyIDMoniker name="/Portfolio/PortfolioGroup/HealthMonitoringServiceInstances" />
-          </setting>
-        </map>
-        <map name="MapHealthStatusService:DataConnectionString" kind="Identity">
-          <setting>
-            <aCSMoniker name="/Portfolio/PortfolioGroup/HealthStatusService/DataConnectionString" />
           </setting>
         </map>
         <map name="MapHealthStatusService:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" kind="Identity">
@@ -163,10 +163,22 @@
       <components>
         <groupHascomponents>
           <role name="HealthMonitoringService" generation="1" functional="0" release="0" software="C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\Portfolio\csx\Debug\roles\HealthMonitoringService" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="-1" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
+            <componentports>
+              <outPort name="NotificationService:health-monitoring" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/Portfolio/PortfolioGroup/SW:NotificationService:health-monitoring" />
+                </outToChannel>
+              </outPort>
+              <outPort name="PortfolioService:health-monitoring" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/Portfolio/PortfolioGroup/SW:PortfolioService:health-monitoring" />
+                </outToChannel>
+              </outPort>
+            </componentports>
             <settings>
               <aCS name="DataConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;HealthMonitoringService&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;HealthMonitoringService&quot; /&gt;&lt;r name=&quot;HealthStatusService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;NotificationService&quot; /&gt;&lt;r name=&quot;PortfolioService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;HealthMonitoringService&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;HealthMonitoringService&quot; /&gt;&lt;r name=&quot;HealthStatusService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;NotificationService&quot;&gt;&lt;e name=&quot;health-monitoring&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;PortfolioService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;health-monitoring&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
@@ -183,11 +195,20 @@
           <role name="HealthStatusService" generation="1" functional="0" release="0" software="C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\Portfolio\csx\Debug\roles\HealthStatusService" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaIISHost.exe " memIndex="-1" hostingEnvironment="frontendadmin" hostingEnvironmentVersion="2">
             <componentports>
               <inPort name="Endpoint1" protocol="http" portRanges="8080" />
+              <outPort name="NotificationService:health-monitoring" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/Portfolio/PortfolioGroup/SW:NotificationService:health-monitoring" />
+                </outToChannel>
+              </outPort>
+              <outPort name="PortfolioService:health-monitoring" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/Portfolio/PortfolioGroup/SW:PortfolioService:health-monitoring" />
+                </outToChannel>
+              </outPort>
             </componentports>
             <settings>
-              <aCS name="DataConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;HealthStatusService&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;HealthMonitoringService&quot; /&gt;&lt;r name=&quot;HealthStatusService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;NotificationService&quot; /&gt;&lt;r name=&quot;PortfolioService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;HealthStatusService&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;HealthMonitoringService&quot; /&gt;&lt;r name=&quot;HealthStatusService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;NotificationService&quot;&gt;&lt;e name=&quot;health-monitoring&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;PortfolioService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;health-monitoring&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
@@ -202,11 +223,24 @@
         </groupHascomponents>
         <groupHascomponents>
           <role name="NotificationService" generation="1" functional="0" release="0" software="C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\Portfolio\csx\Debug\roles\NotificationService" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="-1" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
+            <componentports>
+              <inPort name="health-monitoring" protocol="tcp" />
+              <outPort name="NotificationService:health-monitoring" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/Portfolio/PortfolioGroup/SW:NotificationService:health-monitoring" />
+                </outToChannel>
+              </outPort>
+              <outPort name="PortfolioService:health-monitoring" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/Portfolio/PortfolioGroup/SW:PortfolioService:health-monitoring" />
+                </outToChannel>
+              </outPort>
+            </componentports>
             <settings>
               <aCS name="DataConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
               <aCS name="SendGridApiKey" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;NotificationService&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;HealthMonitoringService&quot; /&gt;&lt;r name=&quot;HealthStatusService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;NotificationService&quot; /&gt;&lt;r name=&quot;PortfolioService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;NotificationService&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;HealthMonitoringService&quot; /&gt;&lt;r name=&quot;HealthStatusService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;NotificationService&quot;&gt;&lt;e name=&quot;health-monitoring&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;PortfolioService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;health-monitoring&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
@@ -223,11 +257,22 @@
           <role name="PortfolioService" generation="1" functional="0" release="0" software="C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\Portfolio\csx\Debug\roles\PortfolioService" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaIISHost.exe " memIndex="-1" hostingEnvironment="frontendadmin" hostingEnvironmentVersion="2">
             <componentports>
               <inPort name="Endpoint1" protocol="http" portRanges="80" />
+              <inPort name="health-monitoring" protocol="tcp" />
+              <outPort name="NotificationService:health-monitoring" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/Portfolio/PortfolioGroup/SW:NotificationService:health-monitoring" />
+                </outToChannel>
+              </outPort>
+              <outPort name="PortfolioService:health-monitoring" protocol="tcp">
+                <outToChannel>
+                  <sFSwitchChannelMoniker name="/Portfolio/PortfolioGroup/SW:PortfolioService:health-monitoring" />
+                </outToChannel>
+              </outPort>
             </componentports>
             <settings>
               <aCS name="DataConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;PortfolioService&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;HealthMonitoringService&quot; /&gt;&lt;r name=&quot;HealthStatusService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;NotificationService&quot; /&gt;&lt;r name=&quot;PortfolioService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;PortfolioService&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;HealthMonitoringService&quot; /&gt;&lt;r name=&quot;HealthStatusService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;NotificationService&quot;&gt;&lt;e name=&quot;health-monitoring&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;PortfolioService&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;health-monitoring&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
@@ -258,14 +303,14 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="bd80b72c-52bd-427b-86c0-30311db492fc" ref="Microsoft.RedDog.Contract\ServiceContract\PortfolioContract@ServiceDefinition">
+    <implementation Id="ef35d1f3-8d10-4052-ad21-476ec10a22d8" ref="Microsoft.RedDog.Contract\ServiceContract\PortfolioContract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="0ec12839-983d-4d0d-b857-6e21b1e2fca4" ref="Microsoft.RedDog.Contract\Interface\HealthStatusService:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="757a6891-ad26-4513-aaa1-877724ad0e6b" ref="Microsoft.RedDog.Contract\Interface\HealthStatusService:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/Portfolio/PortfolioGroup/HealthStatusService:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="6e4d8481-491d-4892-a3f4-d9512a71e83c" ref="Microsoft.RedDog.Contract\Interface\PortfolioService:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="5880d93b-f386-48b1-bcb9-7e22ca04b525" ref="Microsoft.RedDog.Contract\Interface\PortfolioService:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/Portfolio/PortfolioGroup/PortfolioService:Endpoint1" />
           </inPort>

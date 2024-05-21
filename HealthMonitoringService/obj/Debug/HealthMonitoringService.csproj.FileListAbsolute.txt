@@ -176,8 +176,10 @@ C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthMonitoringService\bin\Debug\ru\System.Spatial.resources.dll
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthMonitoringService\bin\Debug\zh-Hans\System.Spatial.resources.dll
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthMonitoringService\bin\Debug\zh-Hant\System.Spatial.resources.dll
-C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthMonitoringService\obj\Debug\HealthMonitoringService.csprojAssemblyReference.cache
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthMonitoringService\obj\Debug\HealthMonitoringService.csproj.CoreCompileInputs.cache
-C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthMonitoringService\obj\Debug\HealthMonitoringService.csproj.CopyComplete
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthMonitoringService\obj\Debug\HealthMonitoringService.dll
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthMonitoringService\obj\Debug\HealthMonitoringService.pdb
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthMonitoringService\bin\Debug\HealthMonitoringWCFInterface.dll
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthMonitoringService\bin\Debug\HealthMonitoringWCFInterface.pdb
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthMonitoringService\obj\Debug\HealthMonitoringService.csprojAssemblyReference.cache
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthMonitoringService\obj\Debug\HealthMonitoringService.csproj.CopyComplete

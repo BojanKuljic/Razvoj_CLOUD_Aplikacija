@@ -47,7 +47,7 @@
     </ProjectReference>
     <ProjectReference Include="..\HealthStatusService\HealthStatusService.csproj">
       <Name>HealthStatusService</Name>
-      <Project>{c3adb41e-17ea-4a2d-b284-137f7f2b1827}</Project>
+      <Project>{bdbb3c32-82c2-4584-821e-d5dbbac2d8f7}</Project>
       <Private>True</Private>
       <RoleType>Web</RoleType>
       <RoleName>HealthStatusService</RoleName>

@@ -386,5 +386,7 @@ C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\PortfolioService\obj\Debug\PortfolioService.csproj.CoreCompileInputs.cache
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\PortfolioService\obj\Debug\PortfolioService.dll
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\PortfolioService\obj\Debug\PortfolioService.pdb
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\PortfolioService\bin\HealthMonitoringWCFInterface.dll
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\PortfolioService\bin\HealthMonitoringWCFInterface.pdb
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\PortfolioService\obj\Debug\PortfolioService.csprojAssemblyReference.cache
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\PortfolioService\obj\Debug\PortfolioService.csproj.CopyComplete

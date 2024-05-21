@@ -24,11 +24,6 @@ namespace PortfolioService_Data
             _table.CreateIfNotExists();
         }
 
-        public void Initialize()
-        {
-            _table.CreateIfNotExists();
-        }
-
         public void InsertOrMergeUser(User user)
         {
             user.RowKey = user.Email;

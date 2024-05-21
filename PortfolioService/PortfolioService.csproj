@@ -221,6 +221,10 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HealthMonitoringWCFInterface\HealthMonitoringWCF.csproj">
+      <Project>{f9ac5213-ee96-455c-9b2f-422f47f40d24}</Project>
+      <Name>HealthMonitoringWCF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PortfolioService_Data\PortfolioService_Data.csproj">
       <Project>{A4EA51AF-9775-4DBA-BA88-1F292DBF6805}</Project>
       <Name>PortfolioService_Data</Name>

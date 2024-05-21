@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using HealthMonitoringWCFInterface;
 using Microsoft.Azure;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
@@ -20,6 +21,8 @@ namespace NotificationService
         private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
         private readonly Notification _notificationService;
         private readonly CloudQueue _queue;
+
+        HealthMonitoringServer healthMonitoringServer;
 
         public WorkerRole()
         {
@@ -55,6 +58,9 @@ namespace NotificationService
 
             bool result = base.OnStart();
 
+            healthMonitoringServer = new HealthMonitoringServer();
+            healthMonitoringServer.Open();
+
             Trace.TraceInformation("NotificationService has been started");
 
             return result;
@@ -68,6 +74,8 @@ namespace NotificationService
             this.runCompleteEvent.WaitOne();
 
             base.OnStop();
+
+            healthMonitoringServer.Close();
 
             Trace.TraceInformation("NotificationService has stopped");
         }

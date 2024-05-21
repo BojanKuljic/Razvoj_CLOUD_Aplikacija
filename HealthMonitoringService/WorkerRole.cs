@@ -5,34 +5,31 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using HealthMonitoringWCFInterface;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage;
 
-namespace HealthMonitoringService
-{
-    public class WorkerRole : RoleEntryPoint
-    {
+namespace HealthMonitoringService {
+    public class WorkerRole : RoleEntryPoint {
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
 
-        public override void Run()
-        {
+        WCFChannel wcfChannel = new WCFChannel();
+        HealthCheckRepository repo = new HealthCheckRepository();
+
+        public override void Run() {
             Trace.TraceInformation("HealthMonitoringService is running");
 
-            try
-            {
+            try {
                 this.RunAsync(this.cancellationTokenSource.Token).Wait();
-            }
-            finally
-            {
+            } finally {
                 this.runCompleteEvent.Set();
             }
         }
 
-        public override bool OnStart()
-        {
+        public override bool OnStart() {
             // Set the maximum number of concurrent connections
             ServicePointManager.DefaultConnectionLimit = 12;
 
@@ -46,8 +43,7 @@ namespace HealthMonitoringService
             return result;
         }
 
-        public override void OnStop()
-        {
+        public override void OnStop() {
             Trace.TraceInformation("HealthMonitoringService is stopping");
 
             this.cancellationTokenSource.Cancel();
@@ -58,13 +54,37 @@ namespace HealthMonitoringService
             Trace.TraceInformation("HealthMonitoringService has stopped");
         }
 
-        private async Task RunAsync(CancellationToken cancellationToken)
-        {
-            // TODO: Replace the following with your own logic.
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                Trace.TraceInformation("Working");
-                await Task.Delay(1000);
+        private async Task RunAsync(CancellationToken cancellationToken) {
+            Random random = new Random();
+
+            while (!cancellationToken.IsCancellationRequested) {
+                var portfolioServiceInstances = RoleEnvironment.Roles["PortfolioService"].Instances;
+                var notificationServiceInstances = RoleEnvironment.Roles["NotificationService"].Instances;
+
+                int portfolioServiceInstanceIndex = random.Next(portfolioServiceInstances.Count);
+                int notificationServiceInstanceIndex = random.Next(notificationServiceInstances.Count);
+                RoleInstance portfolioServiceInstance = portfolioServiceInstances[portfolioServiceInstanceIndex];
+                RoleInstance notificationServiceInstance = notificationServiceInstances[notificationServiceInstanceIndex];
+
+                if (wcfChannel.HealthCheck(portfolioServiceInstance.InstanceEndpoints["health-monitoring"].IPEndpoint.ToString())) {
+                    Trace.TraceInformation("PortfolioService instance " + portfolioServiceInstanceIndex + " is alive");
+                    repo.Create(new HealthCheck(true, HealthCheckPartition.PortfolioServicePartition));
+                } else {
+                    Trace.TraceInformation("PortfolioService instance " + portfolioServiceInstanceIndex + " is dead (!)");
+                    repo.Create(new HealthCheck(false, HealthCheckPartition.PortfolioServicePartition));
+                    // TODO: slanje mejla
+                }
+
+                if (wcfChannel.HealthCheck(notificationServiceInstance.InstanceEndpoints["health-monitoring"].IPEndpoint.ToString())) {
+                    Trace.TraceInformation("NotificationService instance " + portfolioServiceInstanceIndex + " is alive");
+                    repo.Create(new HealthCheck(true, HealthCheckPartition.NotificationServicePartition));
+                } else {
+                    Trace.TraceInformation("NotificationService instance " + portfolioServiceInstanceIndex + " is dead (!)");
+                    repo.Create(new HealthCheck(false, HealthCheckPartition.NotificationServicePartition));
+                    // TODO: slanje mejla
+                }
+
+                await Task.Delay(3000);
             }
         }
     }

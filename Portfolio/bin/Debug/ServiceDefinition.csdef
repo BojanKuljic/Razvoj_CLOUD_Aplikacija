@@ -23,6 +23,7 @@
     </ConfigurationSettings>
     <Endpoints>
       <InputEndpoint name="Endpoint1" protocol="http" port="80" />
+      <InternalEndpoint name="health-monitoring" protocol="tcp" />
     </Endpoints>
     <Contents>
       <Content destination=".\">
@@ -42,6 +43,9 @@
       <Setting name="SendGridApiKey" />
       <Setting name="DataConnectionString" />
     </ConfigurationSettings>
+    <Endpoints>
+      <InternalEndpoint name="health-monitoring" protocol="tcp" />
+    </Endpoints>
     <Contents>
       <Content destination=".\">
         <SourceDirectory path="C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\Portfolio\rcf\Debug\NotificationServiceContent\" />
@@ -81,7 +85,6 @@
     </Sites>
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
-      <Setting name="DataConnectionString" />
     </ConfigurationSettings>
     <Endpoints>
       <InputEndpoint name="Endpoint1" protocol="http" port="8080" />

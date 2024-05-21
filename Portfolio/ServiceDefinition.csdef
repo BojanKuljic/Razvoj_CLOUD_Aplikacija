@@ -14,6 +14,7 @@
     </ConfigurationSettings>
     <Endpoints>
       <InputEndpoint name="Endpoint1" protocol="http" port="80" />
+      <InternalEndpoint name="health-monitoring" protocol="tcp" />
     </Endpoints>
   </WebRole>
   <WorkerRole name="NotificationService" vmsize="Standard_D1_v2">
@@ -22,6 +23,9 @@
       <Setting name="SendGridApiKey" />
       <Setting name="DataConnectionString" />
     </ConfigurationSettings>
+    <Endpoints>
+      <InternalEndpoint name="health-monitoring" protocol="tcp" />
+    </Endpoints>
   </WorkerRole>
   <WorkerRole name="HealthMonitoringService" vmsize="Standard_D1_v2">
     <ConfigurationSettings>
@@ -39,7 +43,6 @@
     </Sites>
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
-      <Setting name="DataConnectionString" />
     </ConfigurationSettings>
     <Endpoints>
       <InputEndpoint name="Endpoint1" protocol="http" port="8080" />
