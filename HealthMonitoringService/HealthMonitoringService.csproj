@@ -70,8 +70,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HealthCheck.cs" />
-    <Compile Include="HealthCheckRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WCFChannel.cs" />
     <Compile Include="WorkerRole.cs" />
@@ -81,6 +79,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HealthCheckRepository\HealthCheckRepository.csproj">
+      <Project>{bf6cc645-74f1-4931-9598-6bb712580a1b}</Project>
+      <Name>HealthCheckRepository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HealthMonitoringWCFInterface\HealthMonitoringWCF.csproj">
       <Project>{f9ac5213-ee96-455c-9b2f-422f47f40d24}</Project>
       <Name>HealthMonitoringWCF</Name>

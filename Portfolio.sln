@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthStatusService", "Heal
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthMonitoringWCF", "HealthMonitoringWCFInterface\HealthMonitoringWCF.csproj", "{F9AC5213-EE96-455C-9B2F-422F47F40D24}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Health projects", "Health projects", "{17FAA6DD-75F3-409A-9609-2C6CF9D99EED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthCheckRepository", "HealthCheckRepository\HealthCheckRepository.csproj", "{BF6CC645-74F1-4931-9598-6BB712580A1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,9 +55,19 @@ Global
 		{F9AC5213-EE96-455C-9B2F-422F47F40D24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9AC5213-EE96-455C-9B2F-422F47F40D24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9AC5213-EE96-455C-9B2F-422F47F40D24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF6CC645-74F1-4931-9598-6BB712580A1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF6CC645-74F1-4931-9598-6BB712580A1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF6CC645-74F1-4931-9598-6BB712580A1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF6CC645-74F1-4931-9598-6BB712580A1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5C619D97-1A12-45E6-BAC5-36385BA6F4CC} = {17FAA6DD-75F3-409A-9609-2C6CF9D99EED}
+		{BDBB3C32-82C2-4584-821E-D5DBBAC2D8F7} = {17FAA6DD-75F3-409A-9609-2C6CF9D99EED}
+		{F9AC5213-EE96-455C-9B2F-422F47F40D24} = {17FAA6DD-75F3-409A-9609-2C6CF9D99EED}
+		{BF6CC645-74F1-4931-9598-6BB712580A1B} = {17FAA6DD-75F3-409A-9609-2C6CF9D99EED}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3576A81-F3A9-4AC4-AF9A-E1B95E11AC27}

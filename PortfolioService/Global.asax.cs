@@ -18,12 +18,12 @@ namespace PortfolioService
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            InitBlobs();
+            //InitBlobs();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
-
+        /*
         public void InitBlobs()
         {
             try
@@ -51,6 +51,6 @@ namespace PortfolioService
         //    "{controller}/{action}/{id}", // URL with parameters
         //    new { controller = "Portfolio", action = "Index", id = UrlParameter.Optional } // Parameter defaults
         //    );
-        //}
+        //}*/
     }
 }

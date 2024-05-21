@@ -49,3 +49,9 @@ C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\bin\MonAgentListener.dll
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\obj\Debug\HealthStatusService.csproj.AssemblyReference.cache
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\obj\Debug\HealthSt.0ADD956A.Up2Date
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\bin\HealthCheckRepository.dll
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\bin\Microsoft.WindowsAzure.Storage.dll
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\bin\Microsoft.Data.Edm.dll
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\bin\Microsoft.Data.Services.Client.dll
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\bin\Microsoft.Data.OData.dll
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\bin\HealthCheckRepository.pdb

@@ -183,3 +183,5 @@ C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthMonitoringService\bin\Debug\HealthMonitoringWCFInterface.pdb
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthMonitoringService\obj\Debug\HealthMonitoringService.csprojAssemblyReference.cache
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthMonitoringService\obj\Debug\HealthMonitoringService.csproj.CopyComplete
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthMonitoringService\bin\Debug\HealthCheckRepository.dll
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthMonitoringService\bin\Debug\HealthCheckRepository.pdb

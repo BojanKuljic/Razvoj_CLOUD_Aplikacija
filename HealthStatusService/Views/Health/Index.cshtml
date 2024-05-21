@@ -1,0 +1,54 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Health status</title>
+
+    <style>
+        /* CSS for styling the bars */
+        .bar {
+            width: 20px;
+            height: 100px;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        /* CSS for formatting the graph */
+        .graph-container {
+            margin: 20px auto;
+            width: 400px;
+            text-align: center;
+        }
+
+        .graph-label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="graph-container">
+        <h2>Health status Graph</h2>
+        @foreach (var healthCheck in ViewBag.HealthChecks) {
+            <div class="bar @(healthCheck.IsAlive ? "green" : "red")"></div>
+        }
+        <div class="graph-label">Legend:</div>
+        <div class="graph-label">Green - Alive</div>
+        <div class="graph-label">Red - Dead</div>
+    </div>
+</body>
+</html>

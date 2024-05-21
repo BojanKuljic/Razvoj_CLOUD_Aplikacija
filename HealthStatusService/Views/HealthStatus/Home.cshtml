@@ -1,0 +1,55 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Health status</title>
+
+    <style>
+        /* CSS for styling the bars */
+        .bar {
+            width: 20px;
+            height: 100px;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        /* CSS for formatting the graph */
+        .graph-container {
+            margin: 20px auto;
+            width: 400px;
+            text-align: center;
+        }
+
+        .graph-label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="graph-container">
+        <h2>Uptime Status Graph</h2>
+        @foreach (var status in Model.UptimeStatus) {
+            <div class="bar @(status.IsUp ? "green" : "red")"></div>
+        }
+        <div class="graph-label">Legend:</div>
+        <div class="graph-label">Green - Up</div>
+        <div class="graph-label">Red - Down</div>
+    </div>
+
+</body>
+</html>

@@ -987,3 +987,11 @@ C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\Portfolio\obj\Debug\HealthMonitoringService\HealthMonitoringWCFInterface.pdb
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\Portfolio\obj\Debug\NotificationService\HealthMonitoringWCFInterface.dll
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\Portfolio\obj\Debug\NotificationService\HealthMonitoringWCFInterface.pdb
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\Portfolio\obj\Debug\HealthMonitoringService\HealthCheckRepository.dll
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\Portfolio\obj\Debug\HealthMonitoringService\HealthCheckRepository.pdb
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\Portfolio\obj\Debug\HealthStatusService\bin\HealthCheckRepository.dll
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\Portfolio\obj\Debug\HealthStatusService\bin\HealthCheckRepository.pdb
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\Portfolio\obj\Debug\HealthStatusService\bin\Microsoft.Data.Edm.dll
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\Portfolio\obj\Debug\HealthStatusService\bin\Microsoft.Data.OData.dll
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\Portfolio\obj\Debug\HealthStatusService\bin\Microsoft.Data.Services.Client.dll
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\Portfolio\obj\Debug\HealthStatusService\bin\Microsoft.WindowsAzure.Storage.dll
