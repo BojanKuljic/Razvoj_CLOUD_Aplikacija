@@ -93,12 +93,13 @@ namespace NotificationService
                 IEnumerable<CloudQueueMessage> messages = await queue.GetMessagesAsync(20);
                 foreach (CloudQueueMessage message in messages)
                 {   //LOMI IH
-                    string[] alarmIds = message.AsString.Split(',');
-                    foreach (var alarmId in alarmIds)
-                    {
-                        //SALJE MAIL
-                        await _notificationService.SendEmailAsync("mile.nalog6@gmail.com", "Alarm Triggered", "Your alarm was triggered.");
-                    }
+
+                    string[] alarmDetails = message.AsString.Split('|');
+                    string cryptocurrencyName = alarmDetails[0];
+                    string alertThreshold = alarmDetails[1];
+                    string email = alarmDetails[2];
+                    //SALJE MAIL
+                    await _notificationService.SendEmailAsync(email, $"Alarm Triggered for {cryptocurrencyName}", $"Your alarm was triggered at {cryptocurrencyName} threshold for cryptocurrency: {cryptocurrencyName}.");
 
                     await queue.DeleteMessageAsync(message);
                 }

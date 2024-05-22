@@ -1,7 +1,10 @@
-﻿using PortfolioService.Models;
+﻿using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Queue;
+using PortfolioService.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -18,11 +21,20 @@ namespace PortfolioService.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SetAlert(SetAlertViewModel model)
+        public async Task<ActionResult> SetAlert(SetAlertViewModel model)
         {
             if (ModelState.IsValid)
             {
-                //TODOOO SET ALERT!
+                CloudStorageAccount storageAccount = CloudStorageAccount.Parse("UseDevelopmentStorage=true");
+                CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+                CloudQueue queue = queueClient.GetQueueReference("alarms");
+                await queue.CreateIfNotExistsAsync();
+
+                string messageContent = $"{model.CryptocurrencyName}|{model.AlertThreshold}|{model.Email}";
+                CloudQueueMessage message = new CloudQueueMessage(messageContent);
+                await queue.AddMessageAsync(message);
+
+                ViewBag.Message = "Alert has been set successfully!";
 
                 return RedirectToAction("Index", "Portfolio");
             }
