@@ -157,7 +157,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginViewModel.cs" />
-    <Compile Include="Models\PortfolioViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\SetAlertViewModel.cs" />
@@ -225,9 +224,9 @@
       <Project>{f9ac5213-ee96-455c-9b2f-422f47f40d24}</Project>
       <Name>HealthMonitoringWCF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PortfolioService_Data\PortfolioService_Data.csproj">
+    <ProjectReference Include="..\PortfolioService_Data\PortfolioServiceStorage.csproj">
       <Project>{A4EA51AF-9775-4DBA-BA88-1F292DBF6805}</Project>
-      <Name>PortfolioService_Data</Name>
+      <Name>PortfolioServiceStorage</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -1,51 +1,41 @@
 ﻿using PortfolioService.Models;
-using PortfolioService_Data;
+using PortfolioServiceStorage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Threading.Tasks;
+using PortfolioServiceStorage.Repos;
 
-namespace PortfolioService.Controllers
-{
-    public class PortfolioController : Controller
-    {
-        private readonly CryptocurrencyDataRepository _cryptocurrencyTableService;
-        private readonly UserDataRepository _userTableService;
+namespace PortfolioService.Controllers {
+    public class PortfolioController : Controller {
+        CryptocurrencyRepository cryptoRepo = new CryptocurrencyRepository();
+        TransactionRepository transactionRepo = new TransactionRepository();
+        UserRepository userRepo = new UserRepository();
+        CryptoAPI criptoAPI = new CryptoAPI();
 
-        private CryptoAPI criptoAPI = new CryptoAPI();
-
-        public PortfolioController()
-        {
-            //string storageConnectionString = System.Configuration.ConfigurationManager.AppSettings["DataConnectionString"];
-            _cryptocurrencyTableService = new CryptocurrencyDataRepository();
-            _userTableService = new UserDataRepository();
-            _cryptocurrencyTableService.Initialize();
-        }
-
-        public ActionResult Index()
-        {
-            if(Session["User"] != null) {
+        [HttpGet]
+        public ActionResult Index() {
+            return View();
+            /*
+            if (Session["User"] != null) {
                 string email = Session["User"].ToString();
                 User user = _userTableService.RetrieveUser(email);
-                PortfolioViewModel model = new PortfolioViewModel
-                {
+                PortfolioViewModel model = new PortfolioViewModel {
                     Holdings = new List<CryptocurrencyHolding>()
                 };
                 double totalValue = 0;
                 double totalProfitOrLoss = 0;
-                if(user.TransactionIDs != null) { 
-                    foreach (string TransKey in user.TransactionIDs)
-                    {
+                if (user.TransactionIDs != null) {
+                    foreach (string TransKey in user.TransactionIDs) {
                         CryptocurrencyTransaction crypto = _cryptocurrencyTableService.RetrieveCryptocurrency(TransKey);
                         Random rand = new Random();
                         double currentCryptoValue = rand.NextDouble(); // await criptoAPI.GetCryptoPrice("BTCUSD");
                         double currentValue = crypto.Amount * currentCryptoValue;
                         double profitOrLoss = currentValue - crypto.PurchaseOrSellValueInUSD;
 
-                        var holdingViewModel = new CryptocurrencyHolding
-                        {
+                        var holdingViewModel = new CryptocurrencyHolding {
                             Name = crypto.Name,
                             Amount = crypto.Amount,
                             Value = currentValue,
@@ -61,11 +51,8 @@ namespace PortfolioService.Controllers
                 model.TotalValue = totalValue;
                 model.TotalProfitOrLoss = totalProfitOrLoss;
                 return View(model);
-            }
-            else
-            {
-                PortfolioViewModel model = new PortfolioViewModel
-                {
+            } else {
+                PortfolioViewModel model = new PortfolioViewModel {
                     Holdings = new List<CryptocurrencyHolding>
                     {
                         new CryptocurrencyHolding { Name = "Bitcoin", Amount = 0.5, Value = 25000, ProfitOrLoss = 5000 },
@@ -76,14 +63,7 @@ namespace PortfolioService.Controllers
                 };
                 return View(model);
             }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AddTransaction(string name, decimal amount, decimal value)
-        {
-            // TOODOO DODAJ TRANSAKCIJU
-            return RedirectToAction("Index");
+            */            
         }
     }
 }

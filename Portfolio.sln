@@ -7,7 +7,7 @@ Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Portfolio", "Portfolio\Port
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortfolioService", "PortfolioService\PortfolioService.csproj", "{320C96D9-9060-4C1D-9317-1763B4FD773C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortfolioService_Data", "PortfolioService_Data\PortfolioService_Data.csproj", "{A4EA51AF-9775-4DBA-BA88-1F292DBF6805}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortfolioServiceStorage", "PortfolioService_Data\PortfolioServiceStorage.csproj", "{A4EA51AF-9775-4DBA-BA88-1F292DBF6805}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService", "NotificationService\NotificationService.csproj", "{EA2C5D7D-6A18-4974-8890-2D6AE6E1EFC8}"
 EndProject

@@ -1,11 +1,11 @@
-﻿@model PortfolioService.Models.PortfolioViewModel
-
-@{
+﻿@{
     ViewBag.Title = "Portfolio";
 }
 
 @if (Session["User"] != null)
 {
+    <h1 style="font-family:'Fira Code'; text-align:center">Dragan pravi crypto tabelu</h1>
+    @*
     <h1>Your Portfolio</h1>
     <h2>Welcome @Session["User"]</h2>
 
@@ -33,7 +33,7 @@
 
     <p>Total Value: @Model.TotalValue</p>
     <p>Total Profit/Loss: @Model.TotalProfitOrLoss</p>
-
+    *@
 }
 else
 {

@@ -50,8 +50,6 @@ C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\bin\HealthCheckRepository.dll
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\bin\Microsoft.WindowsAzure.Storage.dll
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\bin\HealthCheckRepository.pdb
-C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\obj\Debug\HealthStatusService.csprojAssemblyReference.cache
-C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\obj\Debug\HealthStatusService.csproj.CopyComplete
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\bin\Microsoft.Data.Edm.dll
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\bin\Microsoft.Data.OData.dll
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\bin\System.Spatial.dll
@@ -85,3 +83,5 @@ C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\bin\ru\System.Spatial.resources.dll
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\bin\zh-Hans\System.Spatial.resources.dll
 C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\bin\zh-Hant\System.Spatial.resources.dll
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\obj\Debug\HealthStatusService.csprojAssemblyReference.cache
+C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo3\HealthStatusService\obj\Debug\HealthStatusService.csproj.CopyComplete

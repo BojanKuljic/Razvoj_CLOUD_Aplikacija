@@ -22,8 +22,8 @@ namespace HealthMonitoringService {
         public void Create(HealthCheck healthCheck) {
             Loop:
             try {
-                TableOperation insertOrMergeOperation = TableOperation.Insert(healthCheck);
-                _table.Execute(insertOrMergeOperation);
+                TableOperation insertOperation = TableOperation.Insert(healthCheck);
+                _table.Execute(insertOperation);
             } catch {
                 healthCheck.RowKey = Guid.NewGuid().ToString();
                 goto Loop;

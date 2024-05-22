@@ -9,7 +9,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using System.Reflection;
 using System.Web;
 
-namespace PortfolioService_Data {
+namespace PortfolioServiceStorage {
     public class ProfilePictureRepository {
         private CloudStorageAccount storageAccount;
         private CloudBlobContainer container; 

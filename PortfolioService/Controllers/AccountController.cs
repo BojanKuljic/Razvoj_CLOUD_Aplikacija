@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Linq;
 using System.Web;
-using PortfolioService_Data;
+using PortfolioServiceStorage;
 using PortfolioService.Models;
 using System.Web.WebPages;
 using System.IO;
@@ -16,13 +16,13 @@ namespace PortfolioService.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserDataRepository _userTableService;
+        private readonly UserRepository _userTableService;
         private ProfilePictureRepository _profilePictureRepository;
 
         public AccountController()
         {
             //string storageConnectionString = System.Configuration.ConfigurationManager.AppSettings["DataConnectionString"];
-            _userTableService = new UserDataRepository();
+            _userTableService = new UserRepository();
 
             _profilePictureRepository = new ProfilePictureRepository();
         }
