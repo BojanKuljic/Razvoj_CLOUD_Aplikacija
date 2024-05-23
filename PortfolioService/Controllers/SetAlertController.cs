@@ -30,7 +30,7 @@ namespace PortfolioService.Controllers
                 CloudQueue queue = queueClient.GetQueueReference("alarms");
                 await queue.CreateIfNotExistsAsync();
 
-                string messageContent = $"{model.CryptocurrencyName}|{model.AlertThreshold}|{model.Email}";
+                string messageContent = $"{model.CryptocurrencyName}|{model.AlertThreshold}|{model.Email}|{model.isLowerTreshold}";
                 CloudQueueMessage message = new CloudQueueMessage(messageContent);
                 await queue.AddMessageAsync(message);
 

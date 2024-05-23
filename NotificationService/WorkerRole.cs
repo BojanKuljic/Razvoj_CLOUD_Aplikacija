@@ -86,24 +86,34 @@ namespace NotificationService
             CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
             CloudQueue queue = queueClient.GetQueueReference("alarms");
             queue.CreateIfNotExists();
+            CryptoAPI criptoAPI = new CryptoAPI();
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                //KUPI 20 poruka     TODOO: TREBA PROVERITI PORUKE!!!
                 IEnumerable<CloudQueueMessage> messages = await queue.GetMessagesAsync(20);
                 foreach (CloudQueueMessage message in messages)
-                {   //LOMI IH
-
+                {   
                     string[] alarmDetails = message.AsString.Split('|');
                     string cryptocurrencyName = alarmDetails[0];
                     string alertThreshold = alarmDetails[1];
                     string email = alarmDetails[2];
-                    //SALJE MAIL
-                    await _notificationService.SendEmailAsync(email, $"Alarm Triggered for {cryptocurrencyName}", $"Your alarm was triggered at {cryptocurrencyName} threshold for cryptocurrency: {cryptocurrencyName}.");
+                    bool isLowerTreshold = bool.Parse(alarmDetails[3]);
+                    double currentCryptoValue = await CryptoAPI.GetCryptoPrice(cryptocurrencyName);
 
-                    await queue.DeleteMessageAsync(message);
+                    if (isLowerTreshold && currentCryptoValue < double.Parse(alertThreshold))
+                    {
+                        await _notificationService.SendEmailAsync(email, $"Alarm Triggered for {cryptocurrencyName}", $"Your alarm was triggered when cryptocurrency: {cryptocurrencyName} fell below {alertThreshold} threshold.");
+
+                        await queue.DeleteMessageAsync(message);
+                    }
+                    else if(!isLowerTreshold && currentCryptoValue > double.Parse(alertThreshold))
+                    {
+                        await _notificationService.SendEmailAsync(email, $"Alarm Triggered for {cryptocurrencyName}", $"Your alarm was triggered when cryptocurrency: {cryptocurrencyName} reached {alertThreshold} threshold.");
+
+                        await queue.DeleteMessageAsync(message);
+                    }
+              
                 }
-                //Svakih 10 sekundi
                 await Task.Delay(TimeSpan.FromSeconds(10), cancellationToken);
             }
         }
