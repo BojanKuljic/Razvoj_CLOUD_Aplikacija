@@ -86,13 +86,12 @@ namespace NotificationService
             CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
             CloudQueue queue = queueClient.GetQueueReference("alarms");
             queue.CreateIfNotExists();
-            CryptoAPI criptoAPI = new CryptoAPI();
 
             while (!cancellationToken.IsCancellationRequested)
             {
                 IEnumerable<CloudQueueMessage> messages = await queue.GetMessagesAsync(20);
                 foreach (CloudQueueMessage message in messages)
-                {   
+                {
                     string[] alarmDetails = message.AsString.Split('|');
                     string cryptocurrencyName = alarmDetails[0];
                     string alertThreshold = alarmDetails[1];
@@ -106,13 +105,13 @@ namespace NotificationService
 
                         await queue.DeleteMessageAsync(message);
                     }
-                    else if(!isLowerTreshold && currentCryptoValue > double.Parse(alertThreshold))
+                    else if (!isLowerTreshold && currentCryptoValue > double.Parse(alertThreshold))
                     {
                         await _notificationService.SendEmailAsync(email, $"Alarm Triggered for {cryptocurrencyName}", $"Your alarm was triggered when cryptocurrency: {cryptocurrencyName} reached {alertThreshold} threshold.");
 
                         await queue.DeleteMessageAsync(message);
                     }
-              
+
                 }
                 await Task.Delay(TimeSpan.FromSeconds(10), cancellationToken);
             }

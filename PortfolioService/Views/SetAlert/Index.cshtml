@@ -21,5 +21,13 @@
         @Html.LabelFor(m => m.Email)
         @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
     </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.isLowerTreshold, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.CheckBoxFor(m => m.isLowerTreshold, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.isLowerTreshold, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
     <button type="submit" class="btn btn-primary">Set Alert</button>
 }
