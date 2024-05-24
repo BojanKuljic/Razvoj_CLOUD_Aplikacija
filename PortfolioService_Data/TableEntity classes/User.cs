@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.WindowsAzure.Storage.Table;
 
-namespace PortfolioServiceStorage
-{
-    public class User : TableEntity
-    {
-        public User(string email)
-        {
+namespace PortfolioServiceStorage {
+    public class User : TableEntity {
+        public User(string email) {
             this.PartitionKey = "UserPartition";
             this.RowKey = email;
         }
@@ -26,6 +23,5 @@ namespace PortfolioServiceStorage
         public string Country { get; set; }
         public string PhoneNumber { get; set; }
         public string PasswordHash { get; set; }
-        public List<string> TransactionIDs { get; set; }
     }
 }

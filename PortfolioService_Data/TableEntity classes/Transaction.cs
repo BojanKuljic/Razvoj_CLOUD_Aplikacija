@@ -6,22 +6,23 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PortfolioServiceStorage.TableEntityClasses {
-    public enum TransactionType { Buy, Sell }
     public class Transaction : TableEntity {
-        public Transaction(string cryptocurrencyName, TransactionType type, double amount, DateTime dateAndTime, string userEmail) {
+        public Transaction(string cryptocurrencyName, string type, double amountUSD, double amountCrypto, string dateAndTime, string userEmail) {
             this.PartitionKey = "TransactionPartition";
             this.RowKey = Guid.NewGuid().ToString();
             this.CryptocurrencyName = cryptocurrencyName;
             this.Type = type;
-            this.Amount = amount;
+            this.AmountUSD = amountUSD;
+            this.AmountCrypto = amountCrypto;
             this.DateAndTime = dateAndTime;
             this.UserEmail = userEmail;
         }
 
         public string CryptocurrencyName { get; set; }
-        public TransactionType Type { get; set; }
-        public double Amount { get; set; }
-        public DateTime DateAndTime { get; set; }
+        public string Type { get; set; }
+        public double AmountUSD { get; set; }
+        public double AmountCrypto { get; set; }
+        public string DateAndTime { get; set; }  // It's not DateTime because it would be converted to UTC time zone
         public string UserEmail { get; set; }
     }
 }

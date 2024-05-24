@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "AddTransaction";
+}
+
+<h2>Add a transaction</h2>
+<br />
+
+<form action="~/Portfolio/ApplyAddTransaction" method="post">
+    <label style="font-weight:bold">Transaction type:</label>
+    <br />
+    <label style="margin-left:30px">Purchase</label>
+    <input type="radio" name="Type" value="Purchase" />
+    <br />
+    <label style="margin-left:30px">Sale</label>
+    <input type="radio" name="Type" value="Sale" />
+
+    <br />
+    <br />
+
+    <label style="font-weight:bold">Cryptocurrency:</label>
+    <select name="Name" style="margin-left:5px">
+        <option value="BTC">BTC</option>
+        <option value="ETH">ETH</option>
+        <option value="LTC">LTC</option>
+        <option value="BNB">BNB</option>
+        <option value="DOGE">DOGE</option>
+    </select>
+
+    <br />
+    <br />
+
+    <label style="font-weight:bold">Amount (in USD):</label>
+    <input type="text" name="Amount" style="margin-left:5px" />
+
+    <br />
+    <br />
+
+    <label style="font-weight:bold">Date and time:</label>
+    <input type="datetime-local" name="DateAndTime" />
+
+    <br />
+    <br />
+
+    <input type="submit" value="Add" style="width:100px">
+</form>
+@if (ViewBag.AddAttempt) {
+    if (ViewBag.ConversionError) {
+        <br />
+        <p>Conversion rate for this date and time is not available</p>
+    } else if (ViewBag.Added) {
+        <br />
+        <p>Transaction added successfully</p>
+    } else {
+        <br />
+        <p>error, neka ispise zasto nije uspjelo</p>
+    }
+}
+

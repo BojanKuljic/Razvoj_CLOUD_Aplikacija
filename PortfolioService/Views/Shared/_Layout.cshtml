@@ -9,22 +9,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script></head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
 <body>
     <header>
         <nav>
-            <ul>
-                <li>@Html.ActionLink("Portfolio", "Index", "Portfolio")</li>
-                @if (Session["User"] == null) {
-                    <li>@Html.ActionLink("Register", "Register", "Account")</li>
-                    <li>@Html.ActionLink("Login", "Login", "Account")</li>
-                } else {
+            @if (Session["UserEmail"] != null) {
+                <ul>
+                    <li>@Html.ActionLink("Portfolio", "Index", "Portfolio")</li>
+                    <li>@Html.ActionLink("Add transaction", "AddTransaction", "Portfolio")</li>
                     <li>@Html.ActionLink("Search", "Index", "Search")</li>
                     <li>@Html.ActionLink("Set Alert", "Index", "SetAlert")</li>
-                    <li>@Html.ActionLink("Log out", "Logout", "Account")</li>
                     <li>@Html.ActionLink("Edit profile", "EditProfile", "Account")</li>
-                }
-            </ul>
+                    <li>@Html.ActionLink("Log out", "Logout", "Account")</li>
+                </ul>
+            }
         </nav>
     </header>
     <div class="container">

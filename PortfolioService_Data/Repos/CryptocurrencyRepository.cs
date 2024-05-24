@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PortfolioServiceStorage.TableEntityClasses;
+using System.Web.UI.WebControls;
+using System.Xml;
 
 namespace PortfolioServiceStorage.Repos {
     public class CryptocurrencyRepository {
@@ -20,7 +22,7 @@ namespace PortfolioServiceStorage.Repos {
         }
 
         public void Create(Cryptocurrency cryptocurrency) {
-            Loop:
+        Loop:
             try {
                 TableOperation insertOperation = TableOperation.Insert(cryptocurrency);
                 _table.Execute(insertOperation);
@@ -28,6 +30,50 @@ namespace PortfolioServiceStorage.Repos {
                 cryptocurrency.RowKey = Guid.NewGuid().ToString();
                 goto Loop;
             }
+        }
+
+        public IEnumerable<Cryptocurrency> ReadUsersCryptocurrencies(string userEmail) {
+            string filter = TableQuery.GenerateFilterCondition("UserEmail", QueryComparisons.Equal, userEmail);
+
+            TableQuery<Cryptocurrency> query = new TableQuery<Cryptocurrency>().Where(filter);
+
+            return _table.ExecuteQuery(query);
+        }
+
+        public bool UpdateAmountAndProfitOrLoss(string userEmail, string cryptocurrencyName, string transactionType, double transactionAmountUSD, double convertedTransactionAmount) {
+            string emailFilter = TableQuery.GenerateFilterCondition("UserEmail", QueryComparisons.Equal, userEmail);
+            string nameFilter = TableQuery.GenerateFilterCondition("Name", QueryComparisons.Equal, cryptocurrencyName);
+            string combinedFilter = TableQuery.CombineFilters(emailFilter, TableOperators.And, nameFilter);
+
+            TableQuery<Cryptocurrency> query = new TableQuery<Cryptocurrency>().Where(combinedFilter);
+            var result = _table.ExecuteQuery(query).ToList();
+
+            if (result.Count == 0) {
+                if (transactionType == "Sale") {
+                    return false;  // Can't sell if they don't have it 
+                }
+
+                Create(new Cryptocurrency(cryptocurrencyName, convertedTransactionAmount, transactionAmountUSD, userEmail));
+            } else {
+                Cryptocurrency cryptocurrency = result[0];
+
+                if (transactionType == "Purchase") {
+                    cryptocurrency.Amount += convertedTransactionAmount;
+                    cryptocurrency.ProfitOrLossUSD -= transactionAmountUSD;
+                } else {
+                    if (cryptocurrency.Amount < convertedTransactionAmount) {
+                        return false;  // Can't sell if they don't have enough of it 
+                    }
+
+                    cryptocurrency.Amount -= convertedTransactionAmount;
+                    cryptocurrency.ProfitOrLossUSD += transactionAmountUSD;
+                }
+
+                TableOperation replaceOperation = TableOperation.Replace(cryptocurrency);
+                _table.Execute(replaceOperation);
+            }
+
+            return true;
         }
     }
 }

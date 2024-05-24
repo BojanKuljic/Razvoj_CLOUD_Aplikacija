@@ -1,13 +1,12 @@
-﻿@model PortfolioService.Models.LoginViewModel
+﻿@model PortfolioService.Models.LogInViewModel
 
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "LogIn";
 }
 
-<h2>Login</h2>
+<h2>Log in</h2>
 
-@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
+@using (Html.BeginForm("LogIn", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
     @Html.AntiForgeryToken()
     <div class="form-group">
         @Html.LabelFor(m => m.Email, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -26,7 +25,10 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Login" class="btn btn-default" />
+            <input type="submit" value="Log in" class="btn btn-default" />
         </div>
     </div>
+
+    <br />
+    <p>Don't have an account? <a href="~/Account/Register">Register</a></p>
 }

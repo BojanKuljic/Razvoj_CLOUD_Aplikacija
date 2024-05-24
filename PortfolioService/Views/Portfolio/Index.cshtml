@@ -2,40 +2,34 @@
     ViewBag.Title = "Portfolio";
 }
 
-@if (Session["User"] != null)
-{
-    <h1 style="font-family:'Fira Code'; text-align:center">Dragan pravi crypto tabelu</h1>
-    @*
-    <h1>Your Portfolio</h1>
-    <h2>Welcome @Session["User"]</h2>
 
+<h1>Portfolio</h1>
+
+@if (ViewBag.Cryptocurrencies == null) {
+    <p>You don't have any cryptocurrencies.</p>
+} else {
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
+                <th>Cryptocurrency</th>
                 <th>Amount</th>
-                <th>Value</th>
-                <th>Profit/Loss</th>
+                <th>Profit/Loss in USD</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var holding in Model.Holdings)
-            {
+            @foreach (var cryptocurrency in ViewBag.Cryptocurrencies) {
                 <tr>
-                    <td>@holding.Name</td>
-                    <td>@holding.Amount</td>
-                    <td>@holding.Value</td>
-                    <td>@holding.ProfitOrLoss</td>
+                    <td>@cryptocurrency.Name</td>
+                    <td>@cryptocurrency.Amount</td>
+                    <td>@cryptocurrency.ProfitOrLossUSD$</td>
                 </tr>
             }
         </tbody>
     </table>
 
-    <p>Total Value: @Model.TotalValue</p>
-    <p>Total Profit/Loss: @Model.TotalProfitOrLoss</p>
-    *@
+    <br />
+
+    <p>Sum of all amounts in USD: @ViewBag.TotalSumUSD$</p>
+    <p>Total profit/loss in USD: @ViewBag.TotalProfitOrLoss$</p>
 }
-else
-{
-    <h1>Login or reqister to access your portfolio</h1>
-}
+

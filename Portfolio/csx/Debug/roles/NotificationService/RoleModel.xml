@@ -16,16 +16,16 @@
   </Runtime>
   <Properties>
     <Property name="TargetFrameworkVersion" value="v4.5.1" />
-    <Property name="OutputDir" value="C:\Users\milen\Desktop\Proj\RazvojCloudAplikacija_Projekat\Portfolio\obj\Debug\NotificationService\" />
+    <Property name="RoleType" value="Worker" />
+    <Property name="RoleName" value="NotificationService" />
+    <Property name="ProjectName" value="NotificationService" />
+    <Property name="Configuration" value="Debug" />
+    <Property name="Platform" value="AnyCPU" />
     <Property name="RoleTargetFramework" value="v4.5.1" />
-    <Property name="SitePhysicalPath" value="" />
+    <Property name="OutputDir" value="C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo\Portfolio\obj\Debug\NotificationService\" />
     <Property name="EntryPoint" value="NotificationService.dll" />
     <Property name="SourceDir" value="" />
-    <Property name="RoleType" value="Worker" />
-    <Property name="Platform" value="AnyCPU" />
-    <Property name="RoleName" value="NotificationService" />
-    <Property name="Configuration" value="Debug" />
-    <Property name="ProjectName" value="NotificationService" />
+    <Property name="SitePhysicalPath" value="" />
     <Property name="TargetRuntimeVersion" value="v4.0" />
   </Properties>
 </RoleModel>

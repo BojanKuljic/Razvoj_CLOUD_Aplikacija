@@ -7,18 +7,20 @@ using System.Threading.Tasks;
 
 namespace PortfolioServiceStorage.TableEntityClasses {
     public class Cryptocurrency : TableEntity {
-        public Cryptocurrency(string name, double amount, string userEmail) {
+        public Cryptocurrency(string name, double initialAmount, double initialAmountUSD, string userEmail) {
             this.PartitionKey = "CryptocurrencyPartition";
             this.RowKey = Guid.NewGuid().ToString();
             this.Name = name;
-            this.Amount = 0;
-            this.ProfitOrLoss = 0;
+            this.Amount = initialAmount;
+            this.ProfitOrLossUSD = -initialAmountUSD;
             this.UserEmail = userEmail;
         }
 
+        public Cryptocurrency() { }
+
         public string Name { get; set; }
         public double Amount { get; set; }
-        public double ProfitOrLoss { get; set; }
+        public double ProfitOrLossUSD { get; set; }
         public string UserEmail { get; set; }
     }
 }
