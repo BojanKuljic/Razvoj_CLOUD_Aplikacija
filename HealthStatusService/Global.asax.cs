@@ -14,5 +14,11 @@ namespace HealthStatusService
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
+
+        protected void Application_BeginRequest(object sender, EventArgs e) {
+            Response.AddHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            Response.AddHeader("Pragma", "no-cache"); // HTTP 1.0.
+            Response.AddHeader("Expires", "0"); // Proxies.
+        }
     }
 }
