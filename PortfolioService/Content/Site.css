@@ -59,3 +59,41 @@ footer {
     footer p {
         margin: 0;
     }
+
+.container form {
+    margin-top: 20px;
+}
+
+.form-horizontal .form-group {
+    margin-bottom: 15px;
+}
+
+.form-horizontal .control-label {
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: left;
+}
+
+.form-horizontal .col-md-10 {
+    width: 70%;
+}
+
+.form-control {
+    width: 100%;
+}
+
+.btn-default {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+}
+
+    .btn-default:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+        color: #fff;
+    }
+
+.text-danger {
+    color: #dc3545;
+}

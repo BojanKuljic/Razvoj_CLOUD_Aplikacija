@@ -36,12 +36,8 @@ namespace PortfolioService.Controllers {
                 if (model.ProfilePicture != null && model.ProfilePicture.ContentLength > 0) {
                     _profilePictureRepository.Create(model.Email, model.ProfilePicture);
                 } else {
-                    return Content(@"
-                                    <html>
-                                    <body>
-                                        <p>error slika, napravite validaciju</p>
-                                    </body>
-                                    </html>");
+                    ModelState.AddModelError("ProfilePicture", "Profile picture is required.");
+                    return View(model);
                 }
 
                 User user = new User(model.Email) {
@@ -69,15 +65,24 @@ namespace PortfolioService.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogIn(LogInViewModel model) {
-            if (ModelState.IsValid) {
+        public ActionResult LogIn(LogInViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
                 User user = _userTableService.RetrieveUser(model.Email);
-                if (user != null && user.PasswordHash == model.Password) {
-                    //TODO DRUGACIJI PRIKAZ
+                if (user != null && user.PasswordHash == model.Password)
+                {
                     Session["UserEmail"] = user.Email;
                     return RedirectToAction("Index", "Portfolio");
                 }
-                ModelState.AddModelError("", "Invalid login attempt.");
+                if (user == null)
+                {
+                    ModelState.AddModelError("Email", "Email not found.");
+                }
+                else if (user.PasswordHash != model.Password)
+                {
+                    ModelState.AddModelError("Password", "Incorrect password.");
+                }
             }
 
             return View(model);
