@@ -1,59 +1,63 @@
-﻿
+﻿@model PortfolioService.Models.AddTransactionViewModel
+
 @{
     ViewBag.Title = "AddTransaction";
 }
 
 <h2>Add a transaction</h2>
-<br />
 
-<form action="~/Portfolio/ApplyAddTransaction" method="post">
-    <label style="font-weight:bold">Transaction type:</label>
-    <br />
-    <label style="margin-left:30px">Purchase</label>
-    <input type="radio" name="Type" value="Purchase" />
-    <br />
-    <label style="margin-left:30px">Sale</label>
-    <input type="radio" name="Type" value="Sale" />
+@using (Html.BeginForm("ApplyAddTransaction", "Portfolio", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
 
-    <br />
-    <br />
+    <div class="form-group">
+        @Html.LabelFor(m => m.TransactionType, htmlAttributes: new { @class = "control-label col-md-5" })
+        <div class="col-md-10">
+            <div class="radio">
+                @Html.RadioButtonFor(m => m.TransactionType, "Purchase", new { id = "TransactionTypePurchase" })
+                <label for="TransactionTypePurchase">Purchase</label>
+            </div>
+            <div class="radio">
+                @Html.RadioButtonFor(m => m.TransactionType, "Sale", new { id = "TransactionTypeSale" })
+                <label for="TransactionTypeSale">Sale</label>
+            </div>
+            @Html.ValidationMessageFor(m => m.TransactionType, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
-    <label style="font-weight:bold">Cryptocurrency:</label>
-    <select name="Name" style="margin-left:5px">
-        <option value="BTC">BTC</option>
-        <option value="ETH">ETH</option>
-        <option value="LTC">LTC</option>
-        <option value="BNB">BNB</option>
-        <option value="DOGE">DOGE</option>
-    </select>
+    <div class="form-group">
+        @Html.LabelFor(m => m.CryptocurrencyType, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.CryptocurrencyType, new SelectList(new[] {
+                new { Value = "BTC", Text = "BTC" },
+                new { Value = "ETH", Text = "ETH" },
+                new { Value = "LTC", Text = "LTC" },
+                new { Value = "BNB", Text = "BNB" },
+                new { Value = "DOGE", Text = "DOGE" }
+            }, "Value", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.CryptocurrencyType, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
-    <br />
-    <br />
+    <div class="form-group">
+        @Html.LabelFor(m => m.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Amount, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Amount, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
-    <label style="font-weight:bold">Amount (in USD):</label>
-    <input type="text" name="Amount" style="margin-left:5px" />
+    <div class="form-group">
+        @Html.LabelFor(m => m.DateAndTime, htmlAttributes: new { @class = "control-label col-md-5" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.DateAndTime, new { @class = "form-control", type = "datetime-local" })
+            @Html.ValidationMessageFor(m => m.DateAndTime, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
-    <br />
-    <br />
-
-    <label style="font-weight:bold">Date and time:</label>
-    <input type="datetime-local" name="DateAndTime" />
-
-    <br />
-    <br />
-
-    <input type="submit" value="Add" style="width:100px">
-</form>
-@if (ViewBag.AddAttempt) {
-    if (ViewBag.ConversionError) {
-        <br />
-        <p>Conversion rate for this date and time is not available</p>
-    } else if (ViewBag.Added) {
-        <br />
-        <p>Transaction added successfully</p>
-    } else {
-        <br />
-        <p>error, neka ispise zasto nije uspjelo</p>
-    }
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
 }
-

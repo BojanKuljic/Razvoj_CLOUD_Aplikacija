@@ -57,38 +57,62 @@ namespace PortfolioService.Controllers {
         }
 
         [HttpPost]
-        public async Task<ActionResult> ApplyAddTransaction() {
+        public async Task<ActionResult> ApplyAddTransaction(AddTransactionViewModel model) {
             if (Session["UserEmail"] == null) {
                 return RedirectToAction("LogIn", "Account");
             }
 
+            string userEmail = Session["UserEmail"] as string;
+
+            if (!ModelState.IsValid)
+            {
+                return View("AddTransaction", model);
+            }
+
             ViewBag.AddAttempt = true;
 
-            string cryptocurrencyName = Request["Name"];
-            string transactionType = Request["Type"];
+            string cryptocurrencyName = model.CryptocurrencyType;
+            string transactionType = model.TransactionType;
+            DateTime transactionDateAndTime = model.DateAndTime;
+            string transactionDateAndTimeST = transactionDateAndTime.ToString();
+            double transactionAmountUSD = model.Amount;
+            
+            double convertedTransactionAmount = await cryptoConverter.ConvertWithPastPrice("USDT", cryptocurrencyName, transactionAmountUSD, transactionDateAndTime);
 
-            string transactionDateAndTime = Request["DateAndTime"];
-            DateTime transactionDatAndTimeDT = DateTime.Parse(transactionDateAndTime);
-
-            double transactionAmountUSD = Double.Parse(Request["Amount"]);
-            double convertedTransactionAmount = await cryptoConverter.ConvertWithPastPrice("USDT", cryptocurrencyName, transactionAmountUSD, transactionDatAndTimeDT);
-
-            if (convertedTransactionAmount == -1) {
+            if (convertedTransactionAmount == -1)
+            {
                 ViewBag.ConversionError = true;
-                return View("AddTransaction");
-            } else {
+                return View("AddTransaction", model);
+            }
+            else
+            {
                 ViewBag.ConversionError = false;
             }
 
-            // treba uraditi validaciju da se provjeri da li je transactionDateAndTime noviji datum od datuma svih ostalih transakcija u bazi jer moramo natjerati korisnika da hornoloski unosi transakcije da bi izbjegli neke komplikovane probleme
-            // treba provjeriti da li je transactionDateAndTime noviji datum od DateTime.Now
-
-            ViewBag.Added = cryptoRepo.UpdateAmountAndProfitOrLoss((string)Session["UserEmail"], cryptocurrencyName, transactionType, transactionAmountUSD, convertedTransactionAmount);
-            if (!ViewBag.Added) {
-                return View("AddTransaction");
+            if (transactionDateAndTime > DateTime.Now)
+            {
+                ModelState.AddModelError("DateAndTime", "Transaction date and time cannot be in the future.");
+                return View("AddTransaction", model);
             }
 
-            transactionRepo.Create(new Transaction(cryptocurrencyName, transactionType, transactionAmountUSD, convertedTransactionAmount, transactionDateAndTime, (string)Session["UserEmail"]));
+            List<Transaction> userTransactions = transactionRepo.ReadUsersTransactions(userEmail).ToList();
+
+            foreach(Transaction t in userTransactions)
+            {
+                if(DateTime.Parse(t.DateAndTime) >= transactionDateAndTime)
+                {
+                    ModelState.AddModelError("DateAndTime", "Transaction must be newer than all previous transactions");
+                    return View("AddTransaction", model);
+                }
+            }
+
+            ViewBag.Added = cryptoRepo.UpdateAmountAndProfitOrLoss((string)Session["UserEmail"], cryptocurrencyName, transactionType, transactionAmountUSD, convertedTransactionAmount);
+            if (!ViewBag.Added)
+            {
+                return View("AddTransaction", model);
+            }
+
+            transactionRepo.Create(new Transaction(cryptocurrencyName, transactionType, transactionAmountUSD, convertedTransactionAmount, transactionDateAndTimeST, (string)Session["UserEmail"]));
 
             return View("AddTransaction");
         }
