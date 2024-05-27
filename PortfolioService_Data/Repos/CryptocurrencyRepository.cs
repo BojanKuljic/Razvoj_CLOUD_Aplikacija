@@ -75,5 +75,17 @@ namespace PortfolioServiceStorage.Repos {
 
             return true;
         }
+
+        public void Delete(string cryptocurrencyName, string userEmail) {
+            string emailFilter = TableQuery.GenerateFilterCondition("UserEmail", QueryComparisons.Equal, userEmail);
+            string nameFilter = TableQuery.GenerateFilterCondition("Name", QueryComparisons.Equal, cryptocurrencyName);
+            string combinedFilter = TableQuery.CombineFilters(emailFilter, TableOperators.And, nameFilter);
+
+            TableQuery<Cryptocurrency> query = new TableQuery<Cryptocurrency>().Where(combinedFilter);
+            Cryptocurrency cryptocurrencyToDelete = _table.ExecuteQuery(query).ToList()[0];
+
+            TableOperation operation = TableOperation.Delete(cryptocurrencyToDelete);
+            _table.Execute(operation);
+        }
     }
 }

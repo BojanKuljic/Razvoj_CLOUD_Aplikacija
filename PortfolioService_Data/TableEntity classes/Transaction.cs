@@ -18,6 +18,8 @@ namespace PortfolioServiceStorage.TableEntityClasses {
             this.UserEmail = userEmail;
         }
 
+        public Transaction() { }
+
         public string CryptocurrencyName { get; set; }
         public string Type { get; set; }
         public double AmountUSD { get; set; }
