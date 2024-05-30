@@ -82,6 +82,7 @@ namespace NotificationService
 
         private async Task RunAsync(CancellationToken cancellationToken)
         {
+       
             /*
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse("UseDevelopmentStorage=true"); //var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("DataConnectionString"));
             CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
