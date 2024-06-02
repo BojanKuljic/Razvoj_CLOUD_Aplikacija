@@ -1,30 +1,47 @@
-﻿using PortfolioService.Models;
+﻿using CryptocurrencyConversion;
+using PortfolioService.Models;
+using PortfolioServiceStorage.Repos;
+using PortfolioServiceStorage.TableEntityClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
 namespace PortfolioService.Controllers {
     public class SearchController : Controller {
-        [HttpGet]
-        public ActionResult Index() {
-            return Content(@"
-                            <html>
-                            <body>
-                                <p>nije implementirano</p>
-                            </body>
-                            </html>");
-        }
+        CryptocurrencyRepository cryptoRepo = new CryptocurrencyRepository();
+        CryptocurrencyConverter cryptoConverter = new CryptocurrencyConverter();
 
         [HttpGet]
-        public ActionResult Search() {
-            return Content(@"
-                            <html>
-                            <body>
-                                <p>nije implementirano</p>
-                            </body>
-                            </html>");
+        public ActionResult Index() {
+            SearchViewModel model = new SearchViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SearchCrypto(SearchViewModel model) {
+            if (ModelState.IsValid)
+            {
+                ViewBag.CryptoType = model.CryptocurrencyType;
+                ViewBag.CryptoPrice = await cryptoConverter.ConvertWithCurrentPrice(model.CryptocurrencyType, "USDT", 1);
+                var cryptocurrencies = cryptoRepo.ReadUsersCryptocurrencies((string)Session["UserEmail"]);
+                List<Cryptocurrency> newCurrencies = new List<Cryptocurrency>();
+
+
+                foreach (Cryptocurrency c in cryptocurrencies)
+                {
+                    if (c.Name == model.CryptocurrencyType)
+                    {
+                        newCurrencies.Add(c);
+                    }
+                }
+
+                ViewBag.Cryptocurrencies = newCurrencies;
+            }
+            return View("Search", model);
         }
     }
 }

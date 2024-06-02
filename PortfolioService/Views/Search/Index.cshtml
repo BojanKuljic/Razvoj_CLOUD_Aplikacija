@@ -6,33 +6,73 @@
 
 <h2>Search Cryptocurrencies</h2>
 
-@using (Html.BeginForm("Search", "Search", FormMethod.Get))
+@using (Html.BeginForm("SearchCrypto", "Search", FormMethod.Post))
 {
+    @Html.AntiForgeryToken()
+
     <div class="form-group">
-        @Html.LabelFor(m => m.SearchQuery)
-        @Html.TextBoxFor(m => m.SearchQuery, new { @class = "form-control" })
+        @Html.LabelFor(m => m.CryptocurrencyType, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.CryptocurrencyType, new SelectList(new[] {
+                new { Value = "BTC", Text = "BTC" },
+                new { Value = "ETH", Text = "ETH" },
+                new { Value = "LTC", Text = "LTC" },
+                new { Value = "BNB", Text = "BNB" },
+                new { Value = "DOGE", Text = "DOGE" }
+            }, "Value", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.CryptocurrencyType, "", new { @class = "text-danger" })
+        </div>
     </div>
     <button type="submit" class="btn btn-primary">Search</button>
 }
 
-@if (Model.Results != null)
+@if (ViewBag.CryptoType == null)
 {
-    <h3>Results</h3>
+    <p>You must search a cryptocurrency</p>
+}
+else
+{
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Current Price</th>
+                <th>Cryptocurrency</th>
+                <th>Current price</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var result in Model.Results)
-            {
-                <tr>
-                    <td>@result.Name</td>
-                    <td>@result.CurrentPrice</td>
-                </tr>
-            }
+            <tr>
+                <td>@ViewBag.CryptoType</td>
+                <td>@ViewBag.CryptoPrice</td>
+            </tr>
         </tbody>
     </table>
+
+    <br />
+
+    if (ViewBag.Cryptocurrencies == null)
+    {
+        <p>You don't have any cryptocurrencies of that type.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Cryptocurrency</th>
+                    <th>Amount</th>
+                    <th>Profit/Loss in USD</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cryptocurrency in ViewBag.Cryptocurrencies)
+                {
+                    <tr>
+                        <td>@cryptocurrency.Name</td>
+                        <td>@cryptocurrency.Amount</td>
+                        <td>@cryptocurrency.ProfitOrLossUSD$</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 }

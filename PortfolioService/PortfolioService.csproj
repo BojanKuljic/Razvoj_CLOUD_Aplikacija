@@ -155,6 +155,7 @@
     <Compile Include="Models\AddTransactionViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
+    <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\SetAlertViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebRole.cs" />
@@ -199,6 +200,7 @@
     <Content Include="Views\SetAlert\Index.cshtml" />
     <Content Include="Views\Account\EditProfile.cshtml" />
     <Content Include="Views\Portfolio\AddTransaction.cshtml" />
+    <Content Include="Views\Search\SearchCrypto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

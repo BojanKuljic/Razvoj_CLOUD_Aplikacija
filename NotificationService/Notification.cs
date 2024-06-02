@@ -38,7 +38,7 @@ namespace NotificationService
 
                 var mailMessage = new MailMessage
                 {
-                    From = new MailAddress(MAIL),
+//                    From = new MailAddress(MAIL),
                     Subject = subject,
                     Body = body,
                     IsBodyHtml = false,
@@ -47,7 +47,7 @@ namespace NotificationService
                 var smtpClient = new SmtpClient("smtp.gmail.com")
                 {
                     Port = 587,
-                    Credentials = new NetworkCredential(MAIL, SIFRA),
+//                    Credentials = new NetworkCredential(MAIL, SIFRA),
                     EnableSsl = true,
                 };
                 smtpClient.Send(mailMessage);

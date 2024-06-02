@@ -24,14 +24,14 @@
     <Property name="SetConfiguration" value="Configuration=Debug" />
     <Property name="SetPlatform" value="Platform=AnyCPU" />
     <Property name="RoleTargetFramework" value="v4.5.1" />
-    <Property name="OutputDir" value="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat\Portfolio\obj\Debug\HealthStatusService\" />
+    <Property name="OutputDir" value="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat3\Portfolio\obj\Debug\HealthStatusService\" />
     <Property name="EntryPoint" value="HealthStatusService.dll" />
-    <Property name="SourceDir" value="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat\HealthStatusService\" />
-    <Property name="SitePhysicalPath" value="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat\HealthStatusService\" />
+    <Property name="SourceDir" value="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat3\HealthStatusService\" />
+    <Property name="SitePhysicalPath" value="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat3\HealthStatusService\" />
     <Property name="TargetRuntimeVersion" value="v4.0" />
   </Properties>
   <Sites>
-    <Site name="Web" physicalDirectory="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat\HealthStatusService\">
+    <Site name="Web" physicalDirectory="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat3\HealthStatusService\">
       <Bindings>
         <Binding name="Endpoint1" endpointName="Endpoint1" />
       </Bindings>
