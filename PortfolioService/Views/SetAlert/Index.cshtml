@@ -6,28 +6,39 @@
 
 <h2>Set Alert for Cryptocurrency</h2>
 
-@using (Html.BeginForm("SetAlert", "SetAlert", FormMethod.Post))
+@using (Html.BeginForm("SetAlert", "SetAlert", FormMethod.Post, new { @enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
+
     <div class="form-group">
         @Html.LabelFor(m => m.CryptocurrencyName)
         @Html.TextBoxFor(m => m.CryptocurrencyName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CryptocurrencyName, "", new { @class = "text-danger" })
     </div>
+
     <div class="form-group">
         @Html.LabelFor(m => m.AlertThreshold)
         @Html.TextBoxFor(m => m.AlertThreshold, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.AlertThreshold, "", new { @class = "text-danger" })
     </div>
+
     <div class="form-group">
         @Html.LabelFor(m => m.Email)
         @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
     </div>
+
     <div class="form-group">
-        @Html.LabelFor(m => m.isLowerTreshold, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.CheckBoxFor(m => m.isLowerTreshold, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.isLowerTreshold, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.IsLowerTreshold, new { @class = "control-label" })
+        <div class="checkbox">
+            @Html.CheckBoxFor(m => m.IsLowerTreshold)
+            @Html.ValidationMessageFor(m => m.IsLowerTreshold, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <button type="submit" class="btn btn-primary">Set Alert</button>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }
