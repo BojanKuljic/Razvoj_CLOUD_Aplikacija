@@ -27,15 +27,9 @@
     </Endpoints>
     <Contents>
       <Content destination=".\">
-        <SourceDirectory path="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat3\Portfolio\rcf\Debug\PortfolioServiceContent\" />
-      </Content>
-      <Content destination=".\">
-        <SourceDirectory path="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat3\Portfolio\ecf\PortfolioServiceContent\" />
+        <SourceDirectory path="C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo2\Portfolio\rcf\Debug\PortfolioServiceContent\" />
       </Content>
     </Contents>
-    <Imports>
-      <Import moduleName="Diagnostics" />
-    </Imports>
   </WebRole>
   <WorkerRole name="NotificationService" vmsize="Standard_D1_v2">
     <ConfigurationSettings>
@@ -48,15 +42,9 @@
     </Endpoints>
     <Contents>
       <Content destination=".\">
-        <SourceDirectory path="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat3\Portfolio\rcf\Debug\NotificationServiceContent\" />
-      </Content>
-      <Content destination=".\">
-        <SourceDirectory path="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat3\Portfolio\ecf\NotificationServiceContent\" />
+        <SourceDirectory path="C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo2\Portfolio\rcf\Debug\NotificationServiceContent\" />
       </Content>
     </Contents>
-    <Imports>
-      <Import moduleName="Diagnostics" />
-    </Imports>
   </WorkerRole>
   <WorkerRole name="HealthMonitoringService" vmsize="Standard_D1_v2">
     <ConfigurationSettings>
@@ -65,15 +53,9 @@
     </ConfigurationSettings>
     <Contents>
       <Content destination=".\">
-        <SourceDirectory path="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat3\Portfolio\rcf\Debug\HealthMonitoringServiceContent\" />
-      </Content>
-      <Content destination=".\">
-        <SourceDirectory path="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat3\Portfolio\ecf\HealthMonitoringServiceContent\" />
+        <SourceDirectory path="C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo2\Portfolio\rcf\Debug\HealthMonitoringServiceContent\" />
       </Content>
     </Contents>
-    <Imports>
-      <Import moduleName="Diagnostics" />
-    </Imports>
   </WorkerRole>
   <WebRole name="HealthStatusService" vmsize="Standard_D1_v2">
     <Sites>
@@ -91,14 +73,8 @@
     </Endpoints>
     <Contents>
       <Content destination=".\">
-        <SourceDirectory path="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat3\Portfolio\rcf\Debug\HealthStatusServiceContent\" />
-      </Content>
-      <Content destination=".\">
-        <SourceDirectory path="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat3\Portfolio\ecf\HealthStatusServiceContent\" />
+        <SourceDirectory path="C:\Users\User\Desktop\fakultet\cetvrta godina\drugi semestar\Cloud\projekat\repo2\Portfolio\rcf\Debug\HealthStatusServiceContent\" />
       </Content>
     </Contents>
-    <Imports>
-      <Import moduleName="Diagnostics" />
-    </Imports>
   </WebRole>
 </ServiceDefinition>
