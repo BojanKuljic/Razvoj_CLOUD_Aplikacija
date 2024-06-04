@@ -41,7 +41,7 @@ namespace PortfolioService.Controllers {
 
                 ViewBag.Cryptocurrencies = newCurrencies;
             }
-            return View("Search", model);
+            return View(model);
         }
     }
 }
