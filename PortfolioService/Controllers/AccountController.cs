@@ -13,11 +13,13 @@ using Microsoft.WindowsAzure.Storage;
 using System.Reflection;
 
 namespace PortfolioService.Controllers {
-    public class AccountController : Controller {
+    public class AccountController : Controller
+    {
         private readonly UserRepository _userTableService;
         private ProfilePictureRepository _profilePictureRepository;
 
-        public AccountController() {
+        public AccountController()
+        {
             //string storageConnectionString = System.Configuration.ConfigurationManager.AppSettings["DataConnectionString"];
             _userTableService = new UserRepository();
 
@@ -25,41 +27,8 @@ namespace PortfolioService.Controllers {
         }
 
         [HttpGet]
-        public ActionResult Register() {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterViewModel model) {
-            if (ModelState.IsValid) {
-                if (model.ProfilePicture != null && model.ProfilePicture.ContentLength > 0) {
-                    _profilePictureRepository.Create(model.Email, model.ProfilePicture);
-                } else {
-                    ModelState.AddModelError("ProfilePicture", "Profile picture is required.");
-                    return View(model);
-                }
-
-                User user = new User(model.Email) {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Email = model.Email,
-                    Address = model.Address,
-                    City = model.City,
-                    Country = model.Country,
-                    PhoneNumber = model.PhoneNumber,
-                    PasswordHash = model.Password,
-                };
-
-                _userTableService.InsertOrMergeUser(user);
-                return RedirectToAction("Index", "Portfolio");
-            }
-
-            return View(model);
-        }
-
-        [HttpGet]
-        public ActionResult LogIn() {
+        public ActionResult LogIn()
+        {
             return View();
         }
 
@@ -89,62 +58,144 @@ namespace PortfolioService.Controllers {
         }
 
         [HttpGet]
-        public ActionResult Logout() {
+        public ActionResult Logout()
+        {
             //Kasnije dograditi po potrebi
             Session["UserEmail"] = null;
             return RedirectToAction("LogIn");
         }
 
+
         [HttpGet]
-        public ActionResult EditProfile() {
-            if (Session["UserEmail"] == null) {
-                return View("LogIn");
-            }
-
-            ViewBag.User = _userTableService.RetrieveUser((string)Session["UserEmail"]);
-            ViewBag.Edited = false;
-            ViewBag.PictureUri = _profilePictureRepository.GetUri(ViewBag.User.Email);
-
+        public ActionResult Register()
+        {
             return View();
         }
 
         [HttpPost]
-        public ActionResult ApplyProfileEdit() {
-            User oldUser = _userTableService.RetrieveUser((string)Session["UserEmail"]);
-            _userTableService.DeleteUser(oldUser);
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.ProfilePicture != null && model.ProfilePicture.ContentLength > 0)
+                {
+                    _profilePictureRepository.Create(model.Email, model.ProfilePicture);
+                }
+                else
+                {
+                    ModelState.AddModelError("ProfilePicture", "Profile picture is required.");
+                    return View(model);
+                }
 
-            User newUser = new User(Request["Email"]);
-            newUser.FirstName = Request["FirstName"];
-            newUser.LastName = Request["LastName"];
-            newUser.Email = Request["Email"];
-            newUser.Address = Request["Address"];
-            newUser.City = Request["City"];
-            newUser.Country = Request["Country"];
-            newUser.PhoneNumber = Request["PhoneNumber"];
+                User user = new User(model.Email)
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    Address = model.Address,
+                    City = model.City,
+                    Country = model.Country,
+                    PhoneNumber = model.PhoneNumber,
+                    PasswordHash = model.Password,
+                };
 
-            HttpPostedFileBase picture = Request.Files["ProfilePicture"];
-            if (picture != null && picture.ContentLength > 0) {
-                _profilePictureRepository.Delete(oldUser.Email);
-                ViewBag.PictureUri = _profilePictureRepository.Create(newUser.Email, picture);
-            } else if (newUser.Email != oldUser.Email) {
-                _profilePictureRepository.UpdateUri(oldUser.Email, newUser.Email);
+                _userTableService.InsertOrMergeUser(user);
+                return RedirectToAction("Index", "Portfolio");
             }
 
-            if (Request["Password"].IsEmpty()) {
-                newUser.PasswordHash = oldUser.PasswordHash;
-            } else {
-                newUser.PasswordHash = Request["Password"];
+            return View(model);
+        }
+
+
+
+
+        [HttpGet]
+        public ActionResult EditProfile()
+        {
+            /*
+            if (Session["UserEmail"] == null) {
+                return View("LogIn");
+            }
+            
+            ViewBag.User = _userTableService.RetrieveUser((string)Session["UserEmail"]);
+            ViewBag.Edited = false;
+            ViewBag.PictureUri = _profilePictureRepository.GetUri(ViewBag.User.Email);
+
+            return View();*/
+
+            if (Session["UserEmail"] == null)
+            {
+                return View("LogIn");
             }
 
-            _userTableService.InsertOrMergeUser(newUser);
+            var user = _userTableService.RetrieveUser((string)Session["UserEmail"]);
+            var model = new EditViewModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Address = user.Address,
+                City = user.City,
+                Country = user.Country,
+                PhoneNumber = user.PhoneNumber
+            };
 
-            Session["UserEmail"] = newUser.Email;
+            ViewBag.PictureUri = _profilePictureRepository.GetUri(user.Email);
+            ViewBag.Edited = false;
 
-            ViewBag.User = newUser;
-            ViewBag.Edited = true;
-            ViewBag.PictureUri = _profilePictureRepository.GetUri(newUser.Email);
+            return View(model);
+        }
 
-            return View("EditProfile");
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ApplyProfileEdit(EditViewModel model)
+        {
+            if (Session["UserEmail"] == null)
+            {
+                return View("LogIn");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var oldUser = _userTableService.RetrieveUser((string)Session["UserEmail"]);
+                _userTableService.DeleteUser(oldUser);
+
+                var newUser = new User(model.Email)
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    Address = model.Address,
+                    City = model.City,
+                    Country = model.Country,
+                    PhoneNumber = model.PhoneNumber,
+                    PasswordHash = string.IsNullOrEmpty(model.NewPassword) ? oldUser.PasswordHash : model.NewPassword
+                };
+
+                if (model.ProfilePicture != null && model.ProfilePicture.ContentLength > 0)
+                {
+                    _profilePictureRepository.Delete(oldUser.Email);
+                    ViewBag.PictureUri = _profilePictureRepository.Create(newUser.Email, model.ProfilePicture);
+                }
+                else if (newUser.Email != oldUser.Email)
+                {
+                    _profilePictureRepository.UpdateUri(oldUser.Email, newUser.Email);
+                }
+
+                _userTableService.InsertOrMergeUser(newUser);
+
+                Session["UserEmail"] = newUser.Email;
+
+                ViewBag.User = newUser;
+                ViewBag.Edited = true;
+                ViewBag.PictureUri = _profilePictureRepository.GetUri(newUser.Email);
+
+                return View("EditProfile", model);
+            }
+
+            ViewBag.PictureUri = _profilePictureRepository.GetUri((string)Session["UserEmail"]);
+            return View("EditProfile", model);
         }
     }
 }

@@ -1,78 +1,104 @@
-﻿@{
+﻿@model PortfolioService.Models.EditViewModel
+
+@{
     ViewBag.Title = "EditProfile";
 }
 
 <h1>Edit profile</h1>
 
-<form action="~/Account/ApplyProfileEdit" method="post" , enctype="multipart/form-data">
+<form action="~/Account/ApplyProfileEdit" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
     <table>
         <tr>
-            <td>First name:</td>
-            <td><input type="text" name="FirstName" value="@ViewBag.User.FirstName"></td>
+            <td>@Html.LabelFor(m => m.FirstName)</td>
+            <td>
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+            </td>
         </tr>
 
         <tr>
-            <td>Last name:</td>
-            <td><input type="text" name="LastName" value="@ViewBag.User.LastName"></td>
+            <td>@Html.LabelFor(m => m.LastName)</td>
+            <td>
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+            </td>
         </tr>
 
         <tr>
-            <td>Email:</td>
-            <td><input type="text" name="Email" value="@ViewBag.User.Email"></td>
+            <td>@Html.LabelFor(m => m.Email)</td>
+            <td>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </td>
         </tr>
 
         <tr>
-            <td>Address:</td>
-            <td><input type="text" name="Address" value="@ViewBag.User.Address"></td>
+            <td>@Html.LabelFor(m => m.Address)</td>
+            <td>
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+            </td>
         </tr>
 
         <tr>
-            <td>City:</td>
-            <td><input type="text" name="City" value="@ViewBag.User.City"></td>
+            <td>@Html.LabelFor(m => m.City)</td>
+            <td>
+                @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+            </td>
         </tr>
 
         <tr>
-            <td>Country</td>
-            <td><input type="text" name="Country" value="@ViewBag.User.Country"></td>
+            <td>@Html.LabelFor(m => m.Country)</td>
+            <td>
+                @Html.TextBoxFor(m => m.Country, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
+            </td>
         </tr>
 
         <tr>
-            <td>Phone number:</td>
-            <td><input type="text" name="PhoneNumber" value="@ViewBag.User.PhoneNumber"></td>
+            <td>@Html.LabelFor(m => m.PhoneNumber)</td>
+            <td>
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+            </td>
         </tr>
 
         <tr>
-            <td><p></p></td>
-            <td><p></p></td>
+            <td>@Html.LabelFor(m => m.ProfilePicture)</td>
+            <td>
+                @Html.TextBoxFor(m => m.ProfilePicture, new { type = "file", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ProfilePicture, "", new { @class = "text-danger" })
+            </td>
         </tr>
 
-        <tr>
-            <td>Profile picture:</td>
-            <td><input type="file" name="ProfilePicture" class="form-control" /></td>
-        </tr>
+        @if (ViewBag.PictureUri != null)
+        {
+            <tr>
+                <td>Current profile picture:</td>
+                <td><img style="max-width: 200px; max-height: 200px;" src="@ViewBag.PictureUri" /></td>
+            </tr>
+        }
 
         <tr>
-            <td><img style="max-width: 200px; max-height: 200px;" src="@ViewBag.PictureUri" /></td>
-            <td></td>
-        </tr>
-
-        <tr>
-            <td><p></p></td>
-            <td><p></p></td>
-        </tr>
-
-        <tr>
-            <td style="padding-right:10px">New password:</td>
-            <td><input type="password" name="Password"></td>
+            <td>@Html.LabelFor(m => m.NewPassword)</td>
+            <td>
+                @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "text-danger" })
+            </td>
         </tr>
     </table>
-
     <br />
-
-    <input type="submit" value="Apply changes">
+    <input type="submit" value="Apply changes" class="btn btn-primary" />
 </form>
 <br />
 
-@if (ViewBag.Edited) {
+@if (ViewBag.Edited != null && ViewBag.Edited)
+{
     <p>Profile data successfully edited</p>
+}
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial")
 }
