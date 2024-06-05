@@ -14,6 +14,7 @@ using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
 using EmailSending;
+using NotificationService.NotificationUtilities;
 
 namespace NotificationService
 {
@@ -26,6 +27,7 @@ namespace NotificationService
         private readonly CryptocurrencyConverter cryptoCurrencyConverter;
 
         HealthMonitoringServer healthMonitoringServer;
+        NotificationRepository notificationRepo = new NotificationRepository();
 
         public WorkerRole()
         {
@@ -101,18 +103,25 @@ namespace NotificationService
                     string email = alarmDetails[2];
                     bool isLowerTreshold = bool.Parse(alarmDetails[3]);
                     double currentCryptoValue = await cryptoCurrencyConverter.ConvertWithCurrentPrice(cryptocurrencyName, "USDT", 1);
-
                     if (isLowerTreshold && currentCryptoValue < double.Parse(alertThreshold))
                     {
                         await _notificationService.Send(email, $"Alarm Triggered for {cryptocurrencyName}", $"Your alarm was triggered when cryptocurrency: {cryptocurrencyName} fell below {alertThreshold} threshold.");
 
+                        Notification n = new Notification(DateTime.Now.ToString(), $"Your alarm was triggered when cryptocurrency: {cryptocurrencyName} fell below {alertThreshold} threshold.");
+
                         await queue.DeleteMessageAsync(message);
+
+                        notificationRepo.InsertNotification(n);
                     }
                     else if (!isLowerTreshold && currentCryptoValue > double.Parse(alertThreshold))
                     {
                         await _notificationService.Send(email, $"Alarm Triggered for {cryptocurrencyName}", $"Your alarm was triggered when cryptocurrency: {cryptocurrencyName} reached {alertThreshold} threshold.");
 
+                        Notification n = new Notification(DateTime.Now.ToString(), $"Your alarm was triggered when cryptocurrency: {cryptocurrencyName} reached {alertThreshold} threshold.");
+
                         await queue.DeleteMessageAsync(message);
+
+                        notificationRepo.InsertNotification(n);
                     }
 
                 }
