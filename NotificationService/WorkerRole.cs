@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using CryptocurrencyConversion;
 using HealthMonitoringWCFInterface;
 using Microsoft.Azure;
 using Microsoft.WindowsAzure;
@@ -12,6 +13,7 @@ using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
+using EmailSending;
 
 namespace NotificationService
 {
@@ -19,15 +21,16 @@ namespace NotificationService
     {
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
-        private readonly Notification _notificationService;
+        private readonly EmailSender _notificationService;
         private readonly CloudQueue _queue;
+        private readonly CryptocurrencyConverter cryptoCurrencyConverter;
 
         HealthMonitoringServer healthMonitoringServer;
 
         public WorkerRole()
         {
-            string sendGridApiKey = CloudConfigurationManager.GetSetting("SendGridApiKey");
-            _notificationService = new Notification(sendGridApiKey);
+            _notificationService = new EmailSender();
+            cryptoCurrencyConverter = new CryptocurrencyConverter();
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse("UseDevelopmentStorage=true");
             CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
             _queue = queueClient.GetQueueReference("alarms");
@@ -82,8 +85,6 @@ namespace NotificationService
 
         private async Task RunAsync(CancellationToken cancellationToken)
         {
-       
-            /*
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse("UseDevelopmentStorage=true"); //var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("DataConnectionString"));
             CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
             CloudQueue queue = queueClient.GetQueueReference("alarms");
@@ -99,17 +100,17 @@ namespace NotificationService
                     string alertThreshold = alarmDetails[1];
                     string email = alarmDetails[2];
                     bool isLowerTreshold = bool.Parse(alarmDetails[3]);
-                    double currentCryptoValue = await CryptoAPI.GetCryptoPrice(cryptocurrencyName);
+                    double currentCryptoValue = await cryptoCurrencyConverter.ConvertWithCurrentPrice(cryptocurrencyName, "USDT", 1);
 
                     if (isLowerTreshold && currentCryptoValue < double.Parse(alertThreshold))
                     {
-                        await _notificationService.SendEmailAsync(email, $"Alarm Triggered for {cryptocurrencyName}", $"Your alarm was triggered when cryptocurrency: {cryptocurrencyName} fell below {alertThreshold} threshold.");
+                        await _notificationService.Send(email, $"Alarm Triggered for {cryptocurrencyName}", $"Your alarm was triggered when cryptocurrency: {cryptocurrencyName} fell below {alertThreshold} threshold.");
 
                         await queue.DeleteMessageAsync(message);
                     }
                     else if (!isLowerTreshold && currentCryptoValue > double.Parse(alertThreshold))
                     {
-                        await _notificationService.SendEmailAsync(email, $"Alarm Triggered for {cryptocurrencyName}", $"Your alarm was triggered when cryptocurrency: {cryptocurrencyName} reached {alertThreshold} threshold.");
+                        await _notificationService.Send(email, $"Alarm Triggered for {cryptocurrencyName}", $"Your alarm was triggered when cryptocurrency: {cryptocurrencyName} reached {alertThreshold} threshold.");
 
                         await queue.DeleteMessageAsync(message);
                     }
@@ -117,7 +118,6 @@ namespace NotificationService
                 }
                 await Task.Delay(TimeSpan.FromSeconds(10), cancellationToken);
             }
-            */
         }
     }
 }

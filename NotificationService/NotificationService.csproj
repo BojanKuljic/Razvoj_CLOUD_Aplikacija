@@ -89,6 +89,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CryptocurrencyConversion\CryptocurrencyConversion.csproj">
+      <Project>{73F67950-7791-494E-BD75-54D229079A86}</Project>
+      <Name>CryptocurrencyConversion</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EmailSending\EmailSending.csproj">
+      <Project>{69c00ac3-d7d0-4250-be50-10a8c7e9be7f}</Project>
+      <Name>EmailSending</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HealthMonitoringWCFInterface\HealthMonitoringWCF.csproj">
       <Project>{f9ac5213-ee96-455c-9b2f-422f47f40d24}</Project>
       <Name>HealthMonitoringWCF</Name>

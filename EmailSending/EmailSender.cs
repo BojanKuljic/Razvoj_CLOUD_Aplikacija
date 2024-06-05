@@ -25,7 +25,7 @@ namespace EmailSending {
         int smtpServerPortNumber = 587;
 
         // example: Send("receiver@gmail.com", "Example", "This is an example")
-        public bool Send(string receiverAddress, string emailSubject, string emailBody) {
+        public async Task<bool> Send(string receiverAddress, string emailSubject, string emailBody) {
             try {
                 var email = new MimeMessage();
                 email.From.Add(MailboxAddress.Parse(senderAddress));
@@ -34,10 +34,10 @@ namespace EmailSending {
                 email.Body = new TextPart(TextFormat.Plain) { Text = emailBody };
 
                 using (var smtp = new SmtpClient()) {
-                    smtp.Connect(smtpServerAddress, smtpServerPortNumber, SecureSocketOptions.StartTls);
-                    smtp.Authenticate(senderAddress, senderAppPassword);
-                    smtp.Send(email);
-                    smtp.Disconnect(true);
+                    await smtp.ConnectAsync(smtpServerAddress, smtpServerPortNumber, SecureSocketOptions.StartTls);
+                    await smtp.AuthenticateAsync(senderAddress, senderAppPassword);
+                    await smtp.SendAsync(email);
+                    await smtp.DisconnectAsync(true);
                 }
 
                 return true;
