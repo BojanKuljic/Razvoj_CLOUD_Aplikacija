@@ -9,17 +9,15 @@ namespace PortfolioService.Models
     public class SetAlertViewModel
     {
         [Required(ErrorMessage = "Cryptocurrency name is required.")]
+        [Display(Name = "Cryptocurrency type: ")]
         public string CryptocurrencyName { get; set; }
 
         [Required(ErrorMessage = "Alert threshold is required.")]
+        [Display(Name = "Alert threshold: ")]
         [Range(0, double.MaxValue, ErrorMessage = "Please enter a valid threshold.")]
         public double AlertThreshold { get; set; }
 
-        [Required(ErrorMessage = "Email is required.")]
-        [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
-        public string Email { get; set; }
-
+        [Display(Name = "Lower than threshold: ")]
         public bool IsLowerTreshold { get; set; }
-
     }
 }
