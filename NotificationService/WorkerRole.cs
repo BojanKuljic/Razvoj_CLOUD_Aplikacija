@@ -45,7 +45,24 @@ namespace NotificationService
 
             try
             {
+                //odkomentarisati ovo za test padanja servisa posle 30 sekundi
+                //Task.Delay(TimeSpan.FromSeconds(30)).ContinueWith(t => cancellationTokenSource.Cancel());
+
                 this.RunAsync(this.cancellationTokenSource.Token).Wait();
+            }
+            catch (AggregateException ae)
+            {
+                foreach (var ex in ae.InnerExceptions)
+                {
+                    if (ex is TaskCanceledException)
+                    {
+                        Trace.TraceInformation("Task was cancelled as expected.");
+                    }
+                    else
+                    {
+                        Trace.TraceError("An unexpected exception occurred: {0}", ex);
+                    }
+                }
             }
             finally
             {

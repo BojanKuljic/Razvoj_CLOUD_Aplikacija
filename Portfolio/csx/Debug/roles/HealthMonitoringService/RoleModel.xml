@@ -22,7 +22,7 @@
     <Property name="Configuration" value="Debug" />
     <Property name="Platform" value="AnyCPU" />
     <Property name="RoleTargetFramework" value="v4.5.1" />
-    <Property name="OutputDir" value="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat2\Portfolio\obj\Debug\HealthMonitoringService\" />
+    <Property name="OutputDir" value="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat5\Portfolio\obj\Debug\HealthMonitoringService\" />
     <Property name="EntryPoint" value="HealthMonitoringService.dll" />
     <Property name="SourceDir" value="" />
     <Property name="SitePhysicalPath" value="" />
