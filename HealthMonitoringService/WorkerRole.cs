@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
+using HealthMonitoringConsoleApp;
 using HealthMonitoringWCFInterface;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
@@ -15,6 +17,10 @@ namespace HealthMonitoringService {
     public class WorkerRole : RoleEntryPoint {
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
+
+        private readonly IHealthConsoleService consoleService = new ChannelFactory<IHealthConsoleService>(
+        new NetTcpBinding(),
+        new EndpointAddress("net.tcp://localhost:8000/ConsoleService")).CreateChannel();
 
         WCFChannel wcfChannel = new WCFChannel();
         HealthCheckRepository repo = new HealthCheckRepository();
@@ -72,7 +78,7 @@ namespace HealthMonitoringService {
                 } else {
                     Trace.TraceInformation("PortfolioService instance " + portfolioServiceInstanceIndex + " is dead (!)");
                     repo.Create(new HealthCheck(false, HealthCheckPartition.PortfolioServicePartition));
-                    // TODO: slanje mejla
+                    await consoleService.SendEmails("PortfolioService error!" ,"PortfolioService instance " + portfolioServiceInstanceIndex + " is dead (!)");
                 }
 
                 if (wcfChannel.HealthCheck(notificationServiceInstance.InstanceEndpoints["health-monitoring"].IPEndpoint.ToString())) {
@@ -81,7 +87,7 @@ namespace HealthMonitoringService {
                 } else {
                     Trace.TraceInformation("NotificationService instance " + portfolioServiceInstanceIndex + " is dead (!)");
                     repo.Create(new HealthCheck(false, HealthCheckPartition.NotificationServicePartition));
-                    // TODO: slanje mejla
+                    await consoleService.SendEmails("NotificationService error!", "NotificationService instance " + portfolioServiceInstanceIndex + " is dead (!)");
                 }
 
                 await Task.Delay(5000);

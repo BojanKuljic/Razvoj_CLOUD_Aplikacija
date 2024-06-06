@@ -83,6 +83,10 @@
       <Project>{bf6cc645-74f1-4931-9598-6bb712580a1b}</Project>
       <Name>HealthCheckRepository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HealthMonitoringConsoleApp\HealthMonitoringConsoleApp.csproj">
+      <Project>{B5CCC7A4-0E12-465B-A98C-240895A447B3}</Project>
+      <Name>HealthMonitoringConsoleApp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HealthMonitoringWCFInterface\HealthMonitoringWCF.csproj">
       <Project>{f9ac5213-ee96-455c-9b2f-422f47f40d24}</Project>
       <Name>HealthMonitoringWCF</Name>

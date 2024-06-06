@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Portfolio" generation="1" functional="0" release="0" Id="71d393d3-eef7-45a3-a4e3-3b05df4c3ddf" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+=======
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Portfolio" generation="1" functional="0" release="0" Id="f2b72afe-1b41-444b-890d-29402ff94ddd" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+>>>>>>> edfaa841e0f6b9ef6b1fba499b4735dc4c5e0d1f
   <groups>
     <group name="PortfolioGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -162,7 +166,11 @@
       </maps>
       <components>
         <groupHascomponents>
+<<<<<<< HEAD
           <role name="HealthMonitoringService" generation="1" functional="0" release="0" software="C:\Users\Bojan\Desktop\CloudProjekat\Portfolio\csx\Debug\roles\HealthMonitoringService" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="-1" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
+=======
+          <role name="HealthMonitoringService" generation="1" functional="0" release="0" software="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat5\Portfolio\csx\Debug\roles\HealthMonitoringService" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="-1" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
+>>>>>>> edfaa841e0f6b9ef6b1fba499b4735dc4c5e0d1f
             <componentports>
               <outPort name="NotificationService:health-monitoring" protocol="tcp">
                 <outToChannel>
@@ -192,7 +200,11 @@
           </sCSPolicy>
         </groupHascomponents>
         <groupHascomponents>
+<<<<<<< HEAD
           <role name="HealthStatusService" generation="1" functional="0" release="0" software="C:\Users\Bojan\Desktop\CloudProjekat\Portfolio\csx\Debug\roles\HealthStatusService" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaIISHost.exe " memIndex="-1" hostingEnvironment="frontendadmin" hostingEnvironmentVersion="2">
+=======
+          <role name="HealthStatusService" generation="1" functional="0" release="0" software="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat5\Portfolio\csx\Debug\roles\HealthStatusService" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaIISHost.exe " memIndex="-1" hostingEnvironment="frontendadmin" hostingEnvironmentVersion="2">
+>>>>>>> edfaa841e0f6b9ef6b1fba499b4735dc4c5e0d1f
             <componentports>
               <inPort name="Endpoint1" protocol="http" portRanges="8080" />
               <outPort name="NotificationService:health-monitoring" protocol="tcp">
@@ -222,7 +234,11 @@
           </sCSPolicy>
         </groupHascomponents>
         <groupHascomponents>
+<<<<<<< HEAD
           <role name="NotificationService" generation="1" functional="0" release="0" software="C:\Users\Bojan\Desktop\CloudProjekat\Portfolio\csx\Debug\roles\NotificationService" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="-1" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
+=======
+          <role name="NotificationService" generation="1" functional="0" release="0" software="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat5\Portfolio\csx\Debug\roles\NotificationService" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="-1" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
+>>>>>>> edfaa841e0f6b9ef6b1fba499b4735dc4c5e0d1f
             <componentports>
               <inPort name="health-monitoring" protocol="tcp" />
               <outPort name="NotificationService:health-monitoring" protocol="tcp">
@@ -254,7 +270,11 @@
           </sCSPolicy>
         </groupHascomponents>
         <groupHascomponents>
+<<<<<<< HEAD
           <role name="PortfolioService" generation="1" functional="0" release="0" software="C:\Users\Bojan\Desktop\CloudProjekat\Portfolio\csx\Debug\roles\PortfolioService" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaIISHost.exe " memIndex="-1" hostingEnvironment="frontendadmin" hostingEnvironmentVersion="2">
+=======
+          <role name="PortfolioService" generation="1" functional="0" release="0" software="C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat5\Portfolio\csx\Debug\roles\PortfolioService" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaIISHost.exe " memIndex="-1" hostingEnvironment="frontendadmin" hostingEnvironmentVersion="2">
+>>>>>>> edfaa841e0f6b9ef6b1fba499b4735dc4c5e0d1f
             <componentports>
               <inPort name="Endpoint1" protocol="http" portRanges="80" />
               <inPort name="health-monitoring" protocol="tcp" />
@@ -303,14 +323,24 @@
     </group>
   </groups>
   <implements>
+<<<<<<< HEAD
     <implementation Id="0a56266e-5ffb-447c-8259-b0a81bdce169" ref="Microsoft.RedDog.Contract\ServiceContract\PortfolioContract@ServiceDefinition">
       <interfacereferences>
         <interfaceReference Id="717910c2-19ab-49a6-9dee-446b534a56f6" ref="Microsoft.RedDog.Contract\Interface\HealthStatusService:Endpoint1@ServiceDefinition">
+=======
+    <implementation Id="3e868a44-120c-4aa8-b3c6-de30c6f5d33b" ref="Microsoft.RedDog.Contract\ServiceContract\PortfolioContract@ServiceDefinition">
+      <interfacereferences>
+        <interfaceReference Id="9a50b77d-640e-44b1-82dd-517d984825d6" ref="Microsoft.RedDog.Contract\Interface\HealthStatusService:Endpoint1@ServiceDefinition">
+>>>>>>> edfaa841e0f6b9ef6b1fba499b4735dc4c5e0d1f
           <inPort>
             <inPortMoniker name="/Portfolio/PortfolioGroup/HealthStatusService:Endpoint1" />
           </inPort>
         </interfaceReference>
+<<<<<<< HEAD
         <interfaceReference Id="e05019f7-556c-444d-926f-6b79f8b988bd" ref="Microsoft.RedDog.Contract\Interface\PortfolioService:Endpoint1@ServiceDefinition">
+=======
+        <interfaceReference Id="9a309070-0243-476b-96bf-beaddd1f0873" ref="Microsoft.RedDog.Contract\Interface\PortfolioService:Endpoint1@ServiceDefinition">
+>>>>>>> edfaa841e0f6b9ef6b1fba499b4735dc4c5e0d1f
           <inPort>
             <inPortMoniker name="/Portfolio/PortfolioGroup/PortfolioService:Endpoint1" />
           </inPort>
