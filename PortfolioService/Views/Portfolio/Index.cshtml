@@ -1,35 +1,48 @@
 ﻿@{
     ViewBag.Title = "Portfolio";
 }
-
-
 <h1>Portfolio</h1>
-
-@if (ViewBag.Cryptocurrencies == null) {
+@if (ViewBag.Cryptocurrencies == null)
+{
     <p>You don't have any cryptocurrencies.</p>
-} else {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Cryptocurrency</th>
-                <th>Amount</th>
-                <th>Profit/Loss in USD</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var cryptocurrency in ViewBag.Cryptocurrencies) {
+}
+else
+{
+    <form method="post" action="@Url.Action("DeleteSelectedCryptocurrencies", "Portfolio")">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@cryptocurrency.Name</td>
-                    <td>@cryptocurrency.Amount</td>
-                    <td>@cryptocurrency.ProfitOrLossUSD$</td>
+                    <th>Cryptocurrency</th>
+                    <th>Amount</th>
+                    <th>Profit/Loss in USD</th>
+                    <th><input type="submit" value="Delete" class="btn btn-default" /></th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var cryptocurrency in ViewBag.Cryptocurrencies)
+                {
+                    <tr>
+                        <td>@cryptocurrency.Name</td>
+                        <td>@cryptocurrency.Amount</td>
+                        <td>@cryptocurrency.ProfitOrLossUSD$</td>
+                        <td>
+                            <input type="checkbox" name="selectedCryptocurrencyNames" value="@cryptocurrency.Name" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
+
+    </form>
     <br />
 
     <p>Sum of all amounts in USD: @ViewBag.TotalSumUSD$</p>
     <p>Total profit/loss in USD: @ViewBag.TotalProfitOrLoss$</p>
-}
 
+    <form method="post" class="form-group" action="@Url.Action("DeleteLastTransaction", "Portfolio")">
+        <input type="submit" value="Delete last transaction" class="btn btn-default" />
+    </form>
+    
+
+}
