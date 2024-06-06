@@ -37,7 +37,6 @@ namespace PortfolioServiceStorage.Repos {
 
             return _table.ExecuteQuery(query);
         }
-       
 
         public void Delete(string cryptocurrencyName, string transactionType, double transactionAmountUSD, double transactionAmountCrypto, string transactionDateAndTime, string userEmail)
         {
@@ -71,7 +70,6 @@ namespace PortfolioServiceStorage.Repos {
             }
         }
 
-
         public void DeleteLastTransaction(string userEmail)
         {
             // Učitajte sve transakcije korisnika
@@ -94,8 +92,6 @@ namespace PortfolioServiceStorage.Repos {
             }
         }
 
-
-
         public void Delete(string partitionKey, string rowKey)
         {
             TableOperation retrieveOperation = TableOperation.Retrieve<Transaction>(partitionKey, rowKey);
@@ -110,8 +106,5 @@ namespace PortfolioServiceStorage.Repos {
                 _table.Execute(deleteOperation);
             }
         }
-
-
-
-    }
+    }   
 }

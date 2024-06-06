@@ -134,9 +134,6 @@ namespace PortfolioService.Controllers {
             return RedirectToAction("Index");
         }
 
-
-
-
         [HttpPost]
         public ActionResult DeleteSelectedCryptocurrencies(List<string> selectedCryptocurrencyNames)
         {
@@ -148,14 +145,16 @@ namespace PortfolioService.Controllers {
             string userEmail = Session["UserEmail"] as string;
 
             // Iterirajte kroz selektovane kriptovalute i obrišite ih
-            foreach (string cryptocurrencyName in selectedCryptocurrencyNames)
+            if (selectedCryptocurrencyNames.Count != 1)
             {
-                cryptoRepo.Delete(cryptocurrencyName, userEmail);
+                selectedCryptocurrencyNames.Remove("check");
+                foreach (string cryptocurrencyName in selectedCryptocurrencyNames)
+                {
+                    cryptoRepo.Delete(cryptocurrencyName, userEmail);
+                }
             }
-
             // Nakon brisanja, preusmjerite korisnika na Index akcijsku metodu
             return RedirectToAction("Index");
         }
-
     }
 }
