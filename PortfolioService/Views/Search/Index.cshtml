@@ -1,7 +1,7 @@
 ﻿@model PortfolioService.Models.SearchViewModel
 
 @{
-    ViewBag.Title = "Search Cryptocurrencies";
+    ViewBag.Title = "Search  Cryptocurrencies";
 }
 
 <h2>Search Cryptocurrencies</h2>
@@ -10,20 +10,29 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.CryptocurrencyType, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+    <div class="form-group row ">
+        <div class="col-md-2">
+            @Html.LabelFor(m => m.CryptocurrencyType, htmlAttributes: new { @class = "control-label" })
+        </div>
+        
+        <div class="col-md-3">
             @Html.DropDownListFor(m => m.CryptocurrencyType, new SelectList(new[] {
                 new { Value = "BTC", Text = "BTC" },
                 new { Value = "ETH", Text = "ETH" },
                 new { Value = "LTC", Text = "LTC" },
                 new { Value = "BNB", Text = "BNB" },
                 new { Value = "DOGE", Text = "DOGE" }
-            }, "Value", "Text"), new { @class = "form-control" })
+            }, "Value", "Text"), new { @class = "form-control custom-dropdown" })
             @Html.ValidationMessageFor(m => m.CryptocurrencyType, "", new { @class = "text-danger" })
         </div>
     </div>
-    <button type="submit" class="btn btn-primary">Search</button>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+
 }
 
 @if (ViewBag.CryptoType == null)

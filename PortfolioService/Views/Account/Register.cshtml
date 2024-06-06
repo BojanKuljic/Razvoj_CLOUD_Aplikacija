@@ -57,7 +57,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(m => m.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-4" })
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
@@ -65,7 +65,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.ProfilePicture, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(m => m.ProfilePicture, htmlAttributes: new { @class = "control-label col-md-4" })
         <div class="col-md-10">
             <input type="file" name="ProfilePicture" class="form-control" />
             @Html.ValidationMessageFor(m => m.ProfilePicture, "", new { @class = "text-danger" })

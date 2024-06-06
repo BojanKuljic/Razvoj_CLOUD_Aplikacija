@@ -12,7 +12,7 @@
 
     <div class="form-group">
         @Html.LabelFor(m => m.TransactionType, htmlAttributes: new { @class = "control-label col-md-5" })
-        <div class="col-md-10">
+        <div class="col-md-10"  style="margin-top: 10px">
             <div class="radio">
                 @Html.RadioButtonFor(m => m.TransactionType, "Purchase", new { id = "TransactionTypePurchase" })
                 <label for="TransactionTypePurchase">Purchase</label>
