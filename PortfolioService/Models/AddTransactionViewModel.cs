@@ -17,7 +17,7 @@ namespace PortfolioService.Models
         public string CryptocurrencyType { get; set; }
 
         [Required(ErrorMessage = "Amount is a required field!")]
-        [Range(0.01, double.MaxValue, ErrorMessage = "Amount must be greater than 0.")]
+        [Range(5.00, double.MaxValue, ErrorMessage = "Amount must be greater than 5$.")]
         [Display(Name = "Amount: ")]
         public double Amount { get; set; }
 
