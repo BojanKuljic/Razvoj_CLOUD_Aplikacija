@@ -30,6 +30,18 @@ namespace PortfolioService.Controllers {
                 return View();
             }
 
+            List<string> deleteList = new List<string>();
+
+            foreach (Cryptocurrency c in cryptocurrencies)
+            {
+                if(c.Amount == 0)
+                {
+                    deleteList.Add("check");
+                    deleteList.Add(c.Name);
+                    DeleteSelectedCryptocurrenciesNoRefresh(deleteList);
+                }
+            }
+
             ViewBag.Cryptocurrencies = cryptocurrencies;
 
             double totalSumUSD = 0;
@@ -153,6 +165,21 @@ namespace PortfolioService.Controllers {
                 }
             }
             return RedirectToAction("Index");
+        }
+
+        public void DeleteSelectedCryptocurrenciesNoRefresh(List<string> selectedCryptocurrencyNames)
+        {
+            string userEmail = Session["UserEmail"] as string;
+
+            if (selectedCryptocurrencyNames.Count != 1)
+            {
+                selectedCryptocurrencyNames.Remove("check");
+                foreach (string cryptocurrencyName in selectedCryptocurrencyNames)
+                {
+                    cryptoRepo.Delete(cryptocurrencyName, userEmail);
+                    transactionRepo.DeleteAllTransactionsForUserCurrency(cryptocurrencyName, userEmail);
+                }
+            }
         }
     }
 }
