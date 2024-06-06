@@ -109,12 +109,13 @@ namespace PortfolioService.Controllers {
             ViewBag.Added = cryptoRepo.UpdateAmountAndProfitOrLoss((string)Session["UserEmail"], cryptocurrencyName, transactionType, transactionAmountUSD, convertedTransactionAmount);
             if (!ViewBag.Added)
             {
+                ModelState.AddModelError("TransactionType", "You cannot sell more than you have");
                 return View("AddTransaction", model);
             }
 
             transactionRepo.Create(new Transaction(cryptocurrencyName, transactionType, transactionAmountUSD, convertedTransactionAmount, transactionDateAndTimeST, (string)Session["UserEmail"]));
 
-            return View("AddTransaction");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -127,10 +128,8 @@ namespace PortfolioService.Controllers {
 
             string userEmail = Session["UserEmail"] as string;
 
-            // Pozovite metodu za brisanje posljednje transakcije
-            transactionRepo.DeleteLastTransaction(userEmail);
+            transactionRepo.DeleteLastUserTransaction(userEmail);
 
-            // Nakon brisanja, preusmjerite korisnika na Index akcijsku metodu
             return RedirectToAction("Index");
         }
 
@@ -144,16 +143,15 @@ namespace PortfolioService.Controllers {
 
             string userEmail = Session["UserEmail"] as string;
 
-            // Iterirajte kroz selektovane kriptovalute i obrišite ih
             if (selectedCryptocurrencyNames.Count != 1)
             {
                 selectedCryptocurrencyNames.Remove("check");
                 foreach (string cryptocurrencyName in selectedCryptocurrencyNames)
                 {
                     cryptoRepo.Delete(cryptocurrencyName, userEmail);
+                    transactionRepo.DeleteAllTransactionsForUserCurrency(cryptocurrencyName, userEmail);
                 }
             }
-            // Nakon brisanja, preusmjerite korisnika na Index akcijsku metodu
             return RedirectToAction("Index");
         }
     }

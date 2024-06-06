@@ -11,12 +11,14 @@ namespace PortfolioServiceStorage.Repos {
     public class TransactionRepository {
         private CloudStorageAccount _storageAccount;
         private CloudTable _table;
+        CryptocurrencyRepository cryptoRepo;
 
         public TransactionRepository() {
             _storageAccount = CloudStorageAccount.Parse("UseDevelopmentStorage=true"); //var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("DataConnectionString"));
             CloudTableClient tableClient = new CloudTableClient(new Uri(_storageAccount.TableEndpoint.AbsoluteUri), _storageAccount.Credentials);
             _table = tableClient.GetTableReference("TransactionTable");
             _table.CreateIfNotExists();
+            cryptoRepo = new CryptocurrencyRepository();
         }
 
         public void Create(Transaction transaction) {
@@ -38,72 +40,63 @@ namespace PortfolioServiceStorage.Repos {
             return _table.ExecuteQuery(query);
         }
 
-        public void Delete(string cryptocurrencyName, string transactionType, double transactionAmountUSD, double transactionAmountCrypto, string transactionDateAndTime, string userEmail)
+        public void DeleteLastUserTransaction(string userEmail)
         {
-            string filter1 = TableQuery.GenerateFilterCondition("CryptocurrencyName", QueryComparisons.Equal, cryptocurrencyName);
-            string filter2 = TableQuery.GenerateFilterCondition("Type", QueryComparisons.Equal, transactionType);
-            string filter3 = TableQuery.GenerateFilterCondition("AmountUSD", QueryComparisons.Equal, transactionAmountUSD.ToString());
-            string filter4 = TableQuery.GenerateFilterCondition("AmountCrypto", QueryComparisons.Equal, transactionAmountCrypto.ToString());
-            string filter5 = TableQuery.GenerateFilterCondition("DateAndTime", QueryComparisons.Equal, transactionDateAndTime.ToString());
-            string filter6 = TableQuery.GenerateFilterCondition("UserEmail", QueryComparisons.Equal, userEmail);
+            List<Transaction> userTransactions = ReadUsersTransactions(userEmail).ToList();
 
-            string combinedFilter = TableQuery.CombineFilters(
-                TableQuery.CombineFilters(
-                    TableQuery.CombineFilters(filter1, TableOperators.And, filter2),
-                    TableOperators.And,
-                    TableQuery.CombineFilters(filter3, TableOperators.And, filter4)
-                ),
-                TableOperators.And,
-                TableQuery.CombineFilters(filter5, TableOperators.And, filter6)
-            );
+            if (userTransactions == null || userTransactions.Count == 0)
+            {
+                Console.WriteLine("No transactions found for this user.");
+                return;
+            }
+
+            Transaction latestTransaction = null;
+            DateTime latestDateTime = DateTime.MinValue;
+
+            foreach(Transaction t in userTransactions)
+            {
+                DateTime transactionDateTime;
+
+                if(DateTime.TryParse(t.DateAndTime, out transactionDateTime))
+                {
+                    if(transactionDateTime > latestDateTime)
+                    {
+                        latestDateTime = transactionDateTime;
+                        latestTransaction = t;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Failed to parse DateAndTime");
+                }
+            }
+
+            if (latestTransaction.Type == "Sale")
+            {
+                cryptoRepo.UpdateAmountAndProfitOrLoss(userEmail, latestTransaction.CryptocurrencyName, "Purchace", -(latestTransaction.AmountUSD), -latestTransaction.AmountCrypto);
+            }
+            else
+            {
+                cryptoRepo.UpdateAmountAndProfitOrLoss(userEmail, latestTransaction.CryptocurrencyName, "Sale", latestTransaction.AmountUSD, latestTransaction.AmountCrypto);
+            }
+
+            TableOperation operation = TableOperation.Delete(latestTransaction);
+            _table.Execute(operation);
+        }
+
+        public void DeleteAllTransactionsForUserCurrency(string cryptocurrencyName, string userEmail)
+        {
+            string emailFilter = TableQuery.GenerateFilterCondition("UserEmail", QueryComparisons.Equal, userEmail);
+            string nameFilter = TableQuery.GenerateFilterCondition("CryptocurrencyName", QueryComparisons.Equal, cryptocurrencyName);
+            string combinedFilter = TableQuery.CombineFilters(emailFilter, TableOperators.And, nameFilter);
 
             TableQuery<Transaction> query = new TableQuery<Transaction>().Where(combinedFilter);
-            Transaction transactionToDelete = _table.ExecuteQuery(query).ToList().FirstOrDefault();
+            List<Transaction> transactionsToDelete = _table.ExecuteQuery(query).ToList();
 
-            if (transactionToDelete != null)
+            foreach(Transaction t in transactionsToDelete)
             {
-                // Postavite ETag na '*'
-                transactionToDelete.ETag = "*";
-
-                TableOperation operation = TableOperation.Delete(transactionToDelete);
+                TableOperation operation = TableOperation.Delete(t);
                 _table.Execute(operation);
-            }
-        }
-
-        public void DeleteLastTransaction(string userEmail)
-        {
-            // Učitajte sve transakcije korisnika
-            IEnumerable<Transaction> userTransactions = ReadUsersTransactions(userEmail);
-
-            // Pronađite posljednju transakciju
-            Transaction lastTransaction = userTransactions.OrderByDescending(t => t.Timestamp).FirstOrDefault();
-
-            if (lastTransaction != null)
-            {
-                // Izvršite brisanje posljednje transakcije koristeći postojeću Delete metodu
-                Delete(
-                    lastTransaction.CryptocurrencyName,
-                    lastTransaction.Type,
-                    lastTransaction.AmountUSD,
-                    lastTransaction.AmountCrypto,
-                    lastTransaction.DateAndTime,
-                    lastTransaction.UserEmail
-                );
-            }
-        }
-
-        public void Delete(string partitionKey, string rowKey)
-        {
-            TableOperation retrieveOperation = TableOperation.Retrieve<Transaction>(partitionKey, rowKey);
-            TableResult retrievedResult = _table.Execute(retrieveOperation);
-
-            if (retrievedResult.Result is Transaction deleteEntity)
-            {
-                // Postavite ETag na '*'
-                deleteEntity.ETag = "*";
-
-                TableOperation deleteOperation = TableOperation.Delete(deleteEntity);
-                _table.Execute(deleteOperation);
             }
         }
     }   

@@ -3982,3 +3982,13 @@ C:\Users\Bojan\Desktop\ProjekatPortfolio\Portfolio\obj\Debug\NotificationService
 C:\Users\Bojan\Desktop\ProjekatPortfolio\Portfolio\obj\Debug\NotificationService\zh-Hant\Microsoft.Data.OData.resources.dll
 C:\Users\Bojan\Desktop\ProjekatPortfolio\Portfolio\obj\Debug\NotificationService\zh-Hant\Microsoft.Data.Services.Client.resources.dll
 C:\Users\Bojan\Desktop\ProjekatPortfolio\Portfolio\obj\Debug\NotificationService\zh-Hant\System.Spatial.resources.dll
+C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat2\Portfolio\obj\Debug\HealthMonitoringService\BouncyCastle.Crypto.dll
+C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat2\Portfolio\obj\Debug\HealthMonitoringService\EmailSending.dll
+C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat2\Portfolio\obj\Debug\HealthMonitoringService\EmailSending.pdb
+C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat2\Portfolio\obj\Debug\HealthMonitoringService\HealthMonitoringConsoleApp.exe
+C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat2\Portfolio\obj\Debug\HealthMonitoringService\HealthMonitoringConsoleApp.pdb
+C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat2\Portfolio\obj\Debug\HealthMonitoringService\MailKit.dll
+C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat2\Portfolio\obj\Debug\HealthMonitoringService\MailKit.pdb
+C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat2\Portfolio\obj\Debug\HealthMonitoringService\MimeKit.dll
+C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat2\Portfolio\obj\Debug\HealthMonitoringService\MimeKit.pdb
+C:\Users\Luka-PC\Source\Repos\RazvojCloudAplikacija_Projekat2\Portfolio\obj\Debug\HealthMonitoringService\System.Buffers.dll

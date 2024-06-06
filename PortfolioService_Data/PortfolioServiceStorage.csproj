@@ -59,6 +59,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CryptocurrencyConversion\CryptocurrencyConversion.csproj">
+      <Project>{73F67950-7791-494E-BD75-54D229079A86}</Project>
+      <Name>CryptocurrencyConversion</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
