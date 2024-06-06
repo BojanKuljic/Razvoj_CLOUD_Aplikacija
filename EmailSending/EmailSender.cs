@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
-using System.Diagnostics;
 
 namespace EmailSending {
     /*
@@ -18,39 +17,30 @@ namespace EmailSending {
                 https://myaccount.google.com/apppasswords
             After this, put the sixteen-letter password in Authenticate() method of SmtpClient
     */
-    public class EmailSender
-    {
+    public class EmailSender {
         string senderAddress = "throwaway134322312@gmail.com";
         string senderAppPassword = "veqw ptoq qgmb ulwo";
         string smtpServerAddress = "smtp.gmail.com";
         int smtpServerPortNumber = 587;
 
-        public async Task<bool> Send(string receiverAddress, string emailSubject, string emailBody)
-        {
-            try
-            {
+        // example: Send("receiver@gmail.com", "Example", "This is an example")
+        public async Task<bool> Send(string receiverAddress, string emailSubject, string emailBody) {
+            try {
                 var email = new MimeMessage();
                 email.From.Add(MailboxAddress.Parse(senderAddress));
                 email.To.Add(MailboxAddress.Parse(receiverAddress));
                 email.Subject = emailSubject;
                 email.Body = new TextPart(TextFormat.Plain) { Text = emailBody };
 
-                using (var smtp = new SmtpClient())
-                {
-                    Trace.TraceInformation($"Connecting to SMTP server: {smtpServerAddress}");
+                using (var smtp = new SmtpClient()) {
                     await smtp.ConnectAsync(smtpServerAddress, smtpServerPortNumber, SecureSocketOptions.StartTls);
-                    Trace.TraceInformation($"Authenticating as: {senderAddress}");
                     await smtp.AuthenticateAsync(senderAddress, senderAppPassword);
-                    Trace.TraceInformation($"Sending email to: {receiverAddress}");
                     await smtp.SendAsync(email);
                     await smtp.DisconnectAsync(true);
                 }
 
                 return true;
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError($"Error sending email: {ex.Message}");
+            } catch {
                 return false;
             }
         }

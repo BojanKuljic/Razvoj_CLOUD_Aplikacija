@@ -32,10 +32,8 @@ namespace PortfolioService.Controllers {
 
             List<string> deleteList = new List<string>();
 
-            foreach (Cryptocurrency c in cryptocurrencies)
-            {
-                if(c.Amount == 0)
-                {
+            foreach (Cryptocurrency c in cryptocurrencies) {
+                if (c.Amount == 0) {
                     deleteList.Add("check");
                     deleteList.Add(c.Name);
                     DeleteSelectedCryptocurrenciesNoRefresh(deleteList);
@@ -76,8 +74,7 @@ namespace PortfolioService.Controllers {
 
             string userEmail = Session["UserEmail"] as string;
 
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid) {
                 return View("AddTransaction", model);
             }
 
@@ -88,39 +85,32 @@ namespace PortfolioService.Controllers {
             DateTime transactionDateAndTime = model.DateAndTime;
             string transactionDateAndTimeST = transactionDateAndTime.ToString();
             double transactionAmountUSD = model.Amount;
-            
+
             double convertedTransactionAmount = await cryptoConverter.ConvertWithPastPrice("USDT", cryptocurrencyName, transactionAmountUSD, transactionDateAndTime);
 
-            if (convertedTransactionAmount == -1)
-            {
+            if (convertedTransactionAmount == -1) {
                 ViewBag.ConversionError = true;
                 return View("AddTransaction", model);
-            }
-            else
-            {
+            } else {
                 ViewBag.ConversionError = false;
             }
 
-            if (transactionDateAndTime > DateTime.Now)
-            {
+            if (transactionDateAndTime > DateTime.Now) {
                 ModelState.AddModelError("DateAndTime", "Transaction date and time cannot be in the future.");
                 return View("AddTransaction", model);
             }
 
             List<Transaction> userTransactions = transactionRepo.ReadUsersTransactions(userEmail).ToList();
 
-            foreach(Transaction t in userTransactions)
-            {
-                if(DateTime.Parse(t.DateAndTime) >= transactionDateAndTime)
-                {
+            foreach (Transaction t in userTransactions) {
+                if (DateTime.Parse(t.DateAndTime) > transactionDateAndTime) {
                     ModelState.AddModelError("DateAndTime", "Transaction must be newer than all previous transactions");
                     return View("AddTransaction", model);
                 }
             }
 
             ViewBag.Added = cryptoRepo.UpdateAmountAndProfitOrLoss((string)Session["UserEmail"], cryptocurrencyName, transactionType, transactionAmountUSD, convertedTransactionAmount);
-            if (!ViewBag.Added)
-            {
+            if (!ViewBag.Added) {
                 ModelState.AddModelError("TransactionType", "You cannot sell more than you have");
                 return View("AddTransaction", model);
             }
@@ -131,35 +121,57 @@ namespace PortfolioService.Controllers {
         }
 
         [HttpPost]
-        public ActionResult DeleteLastTransaction()
-        {
-            if (Session["UserEmail"] == null)
-            {
+        public ActionResult DeleteLastTransaction() {
+            if (Session["UserEmail"] == null) {
                 return RedirectToAction("LogIn", "Account");
             }
 
             string userEmail = Session["UserEmail"] as string;
 
-            transactionRepo.DeleteLastUserTransaction(userEmail);
+            List<Transaction> userTransactions = transactionRepo.ReadUsersTransactions(userEmail).ToList();
+
+            if (userTransactions == null || userTransactions.Count == 0) {
+                ViewBag.NoTransactions = true;
+
+                return RedirectToAction("Index");
+            }
+
+            Transaction latestTransaction = null;
+            DateTime latestDateTime = DateTime.MinValue;
+
+            foreach (Transaction transaction in userTransactions) {
+                DateTime transactionDateTime;
+
+                if (DateTime.TryParse(transaction.DateAndTime, out transactionDateTime)) {
+                    if (transactionDateTime > latestDateTime) {
+                        latestDateTime = transactionDateTime;
+                        latestTransaction = transaction;
+                    }
+                }
+            }
+
+            if (latestTransaction.Type == "Sale") {
+                cryptoRepo.UpdateAmountAndProfitOrLoss(userEmail, latestTransaction.CryptocurrencyName, "Purchase", -(latestTransaction.AmountUSD), -latestTransaction.AmountCrypto);
+            } else {
+                cryptoRepo.UpdateAmountAndProfitOrLoss(userEmail, latestTransaction.CryptocurrencyName, "Sale", latestTransaction.AmountUSD, latestTransaction.AmountCrypto);
+            }
+
+            transactionRepo.Delete(latestTransaction);
 
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public ActionResult DeleteSelectedCryptocurrencies(List<string> selectedCryptocurrencyNames)
-        {
-            if (Session["UserEmail"] == null)
-            {
+        public ActionResult DeleteSelectedCryptocurrencies(List<string> selectedCryptocurrencyNames) {
+            if (Session["UserEmail"] == null) {
                 return RedirectToAction("LogIn", "Account");
             }
 
             string userEmail = Session["UserEmail"] as string;
 
-            if (selectedCryptocurrencyNames.Count != 1)
-            {
+            if (selectedCryptocurrencyNames.Count != 1) {
                 selectedCryptocurrencyNames.Remove("check");
-                foreach (string cryptocurrencyName in selectedCryptocurrencyNames)
-                {
+                foreach (string cryptocurrencyName in selectedCryptocurrencyNames) {
                     cryptoRepo.Delete(cryptocurrencyName, userEmail);
                     transactionRepo.DeleteAllTransactionsForUserCurrency(cryptocurrencyName, userEmail);
                 }
@@ -167,15 +179,12 @@ namespace PortfolioService.Controllers {
             return RedirectToAction("Index");
         }
 
-        public void DeleteSelectedCryptocurrenciesNoRefresh(List<string> selectedCryptocurrencyNames)
-        {
+        public void DeleteSelectedCryptocurrenciesNoRefresh(List<string> selectedCryptocurrencyNames) {
             string userEmail = Session["UserEmail"] as string;
 
-            if (selectedCryptocurrencyNames.Count != 1)
-            {
+            if (selectedCryptocurrencyNames.Count != 1) {
                 selectedCryptocurrencyNames.Remove("check");
-                foreach (string cryptocurrencyName in selectedCryptocurrencyNames)
-                {
+                foreach (string cryptocurrencyName in selectedCryptocurrencyNames) {
                     cryptoRepo.Delete(cryptocurrencyName, userEmail);
                     transactionRepo.DeleteAllTransactionsForUserCurrency(cryptocurrencyName, userEmail);
                 }

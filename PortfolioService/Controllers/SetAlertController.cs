@@ -8,23 +8,22 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace PortfolioService.Controllers
-{
-    public class SetAlertController : Controller
-    {
+namespace PortfolioService.Controllers {
+    public class SetAlertController : Controller {
         [HttpGet]
-        public ActionResult Index()
-        {
+        public ActionResult Index() {
             SetAlertViewModel model = new SetAlertViewModel();
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SetAlert(SetAlertViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
+        public async Task<ActionResult> SetAlert(SetAlertViewModel model) {
+            if (Session["UserEmail"] == null) {
+                return RedirectToAction("LogIn", "Account");
+            }
+
+            if (ModelState.IsValid) {
                 CloudStorageAccount storageAccount = CloudStorageAccount.Parse("UseDevelopmentStorage=true");
                 CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
                 CloudQueue queue = queueClient.GetQueueReference("alarms");

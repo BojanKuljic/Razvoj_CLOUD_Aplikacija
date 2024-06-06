@@ -1,18 +1,15 @@
 ﻿@{
-                /**/
+    /**/
 
-                ViewBag.Title = "Portfolio";
+    ViewBag.Title = "Portfolio";
 }
 
 
 <h1>Portfolio</h1>
 
-@if (ViewBag.Cryptocurrencies == null)
-{
+@if (ViewBag.Cryptocurrencies == null) {
     <p>You don't have any cryptocurrencies.</p>
-}
-else
-{
+} else {
     <form method="post" action="@Url.Action("DeleteSelectedCryptocurrencies", "Portfolio")">
         <input type="hidden" name="selectedCryptocurrencyNames" value="check" />
         <table class="table">
@@ -25,8 +22,7 @@ else
                 </tr>
             </thead>
             <tbody>
-                @foreach (var cryptocurrency in ViewBag.Cryptocurrencies)
-                {
+                @foreach (var cryptocurrency in ViewBag.Cryptocurrencies) {
                     <tr>
                         <td>@cryptocurrency.Name</td>
                         <td>@cryptocurrency.Amount</td>
@@ -47,5 +43,9 @@ else
     <form method="post" class="form-group" action="@Url.Action("DeleteLastTransaction", "Portfolio")">
         <input type="submit" value="Delete last transaction" class="btn btn-default" />
     </form>
+}
+
+@if (ViewBag.NoTransactions != null && ViewBag.NoTransactions) {
+    <p style="color:red">You don't have any transactions</p>
 }
 

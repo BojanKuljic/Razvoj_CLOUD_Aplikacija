@@ -6,13 +6,12 @@
 
 <h2>Add a transaction</h2>
 
-@using (Html.BeginForm("ApplyAddTransaction", "Portfolio", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-{
+@using (Html.BeginForm("ApplyAddTransaction", "Portfolio", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" })) {
     @Html.AntiForgeryToken()
 
     <div class="form-group">
         @Html.LabelFor(m => m.TransactionType, htmlAttributes: new { @class = "control-label col-md-5" })
-        <div class="col-md-10"  style="margin-top: 10px">
+        <div class="col-md-10" style="margin-top: 10px">
             <div class="radio">
                 @Html.RadioButtonFor(m => m.TransactionType, "Purchase", new { id = "TransactionTypePurchase" })
                 <label for="TransactionTypePurchase">Purchase</label>
@@ -60,4 +59,10 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </div>
+
+    <br />
+}
+
+@if (ViewBag.ConversionError != null && ViewBag.ConversionError == true) {
+    <p style="color:red">Price of cryptocurrency not available for the specified date and time</p>
 }

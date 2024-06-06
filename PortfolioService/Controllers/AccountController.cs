@@ -13,13 +13,11 @@ using Microsoft.WindowsAzure.Storage;
 using System.Reflection;
 
 namespace PortfolioService.Controllers {
-    public class AccountController : Controller
-    {
+    public class AccountController : Controller {
         private readonly UserRepository _userTableService;
         private ProfilePictureRepository _profilePictureRepository;
 
-        public AccountController()
-        {
+        public AccountController() {
             //string storageConnectionString = System.Configuration.ConfigurationManager.AppSettings["DataConnectionString"];
             _userTableService = new UserRepository();
 
@@ -27,29 +25,22 @@ namespace PortfolioService.Controllers {
         }
 
         [HttpGet]
-        public ActionResult LogIn()
-        {
+        public ActionResult LogIn() {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogIn(LogInViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
+        public ActionResult LogIn(LogInViewModel model) {
+            if (ModelState.IsValid) {
                 User user = _userTableService.RetrieveUser(model.Email);
-                if (user != null && user.PasswordHash == model.Password)
-                {
+                if (user != null && user.PasswordHash == model.Password) {
                     Session["UserEmail"] = user.Email;
                     return RedirectToAction("Index", "Portfolio");
                 }
-                if (user == null)
-                {
+                if (user == null) {
                     ModelState.AddModelError("Email", "Email not found.");
-                }
-                else if (user.PasswordHash != model.Password)
-                {
+                } else if (user.PasswordHash != model.Password) {
                     ModelState.AddModelError("Password", "Incorrect password.");
                 }
             }
@@ -58,8 +49,7 @@ namespace PortfolioService.Controllers {
         }
 
         [HttpGet]
-        public ActionResult Logout()
-        {
+        public ActionResult Logout() {
             //Kasnije dograditi po potrebi
             Session["UserEmail"] = null;
             return RedirectToAction("LogIn");
@@ -67,29 +57,22 @@ namespace PortfolioService.Controllers {
 
 
         [HttpGet]
-        public ActionResult Register()
-        {
+        public ActionResult Register() {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                if (model.ProfilePicture != null && model.ProfilePicture.ContentLength > 0)
-                {
+        public ActionResult Register(RegisterViewModel model) {
+            if (ModelState.IsValid) {
+                if (model.ProfilePicture != null && model.ProfilePicture.ContentLength > 0) {
                     _profilePictureRepository.Create(model.Email, model.ProfilePicture);
-                }
-                else
-                {
+                } else {
                     ModelState.AddModelError("ProfilePicture", "Profile picture is required.");
                     return View(model);
                 }
 
-                User user = new User(model.Email)
-                {
+                User user = new User(model.Email) {
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Email = model.Email,
@@ -111,8 +94,8 @@ namespace PortfolioService.Controllers {
 
 
         [HttpGet]
-        public ActionResult EditProfile()
-        {
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult EditProfile() {
             /*
             if (Session["UserEmail"] == null) {
                 return View("LogIn");
@@ -124,14 +107,18 @@ namespace PortfolioService.Controllers {
 
             return View();*/
 
-            if (Session["UserEmail"] == null)
-            {
+            Response.Headers["Pragma-directive"] = "no-cache";
+            Response.Headers["Cache-directive"] = "no-cache";
+            Response.Headers["Cache-control"] = "no-cache";
+            Response.Headers["Pragma"] = "no-cache";
+            Response.Headers["Expires"] = "0";
+
+            if (Session["UserEmail"] == null) {
                 return View("LogIn");
             }
 
             var user = _userTableService.RetrieveUser((string)Session["UserEmail"]);
-            var model = new EditViewModel
-            {
+            var model = new EditViewModel {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
@@ -149,20 +136,23 @@ namespace PortfolioService.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ApplyProfileEdit(EditViewModel model)
-        {
-            if (Session["UserEmail"] == null)
-            {
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult ApplyProfileEdit(EditViewModel model) {
+            if (Session["UserEmail"] == null) {
                 return View("LogIn");
             }
 
-            if (ModelState.IsValid)
-            {
+            Response.Headers["Pragma-directive"] = "no-cache";
+            Response.Headers["Cache-directive"] = "no-cache";
+            Response.Headers["Cache-control"] = "no-cache";
+            Response.Headers["Pragma"] = "no-cache";
+            Response.Headers["Expires"] = "0";
+
+            if (ModelState.IsValid) {
                 var oldUser = _userTableService.RetrieveUser((string)Session["UserEmail"]);
                 _userTableService.DeleteUser(oldUser);
 
-                var newUser = new User(model.Email)
-                {
+                var newUser = new User(model.Email) {
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Email = model.Email,
@@ -173,13 +163,10 @@ namespace PortfolioService.Controllers {
                     PasswordHash = string.IsNullOrEmpty(model.NewPassword) ? oldUser.PasswordHash : model.NewPassword
                 };
 
-                if (model.ProfilePicture != null && model.ProfilePicture.ContentLength > 0)
-                {
+                if (model.ProfilePicture != null && model.ProfilePicture.ContentLength > 0) {
                     _profilePictureRepository.Delete(oldUser.Email);
                     ViewBag.PictureUri = _profilePictureRepository.Create(newUser.Email, model.ProfilePicture);
-                }
-                else if (newUser.Email != oldUser.Email)
-                {
+                } else if (newUser.Email != oldUser.Email) {
                     _profilePictureRepository.UpdateUri(oldUser.Email, newUser.Email);
                 }
 
@@ -191,11 +178,11 @@ namespace PortfolioService.Controllers {
                 ViewBag.Edited = true;
                 ViewBag.PictureUri = _profilePictureRepository.GetUri(newUser.Email);
 
-                return View("EditProfile", model);
+                return RedirectToAction("EditProfile");
             }
 
             ViewBag.PictureUri = _profilePictureRepository.GetUri((string)Session["UserEmail"]);
-            return View("EditProfile", model);
+            return RedirectToAction("EditProfile");
         }
     }
 }

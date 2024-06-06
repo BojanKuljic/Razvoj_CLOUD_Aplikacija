@@ -16,6 +16,10 @@ namespace PortfolioService.Controllers {
 
         [HttpGet]
         public ActionResult Index() {
+            if (Session["UserEmail"] == null) {
+                return RedirectToAction("LogIn", "Account");
+            }
+
             SearchViewModel model = new SearchViewModel();
             return View(model);
         }
@@ -23,18 +27,19 @@ namespace PortfolioService.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SearchCrypto(SearchViewModel model) {
-            if (ModelState.IsValid)
-            {
+            if (Session["UserEmail"] == null) {
+                return RedirectToAction("LogIn", "Account");
+            }
+
+            if (ModelState.IsValid) {
                 ViewBag.CryptoType = model.CryptocurrencyType;
                 ViewBag.CryptoPrice = await cryptoConverter.ConvertWithCurrentPrice(model.CryptocurrencyType, "USDT", 1);
                 var cryptocurrencies = cryptoRepo.ReadUsersCryptocurrencies((string)Session["UserEmail"]);
                 List<Cryptocurrency> newCurrencies = new List<Cryptocurrency>();
 
 
-                foreach (Cryptocurrency c in cryptocurrencies)
-                {
-                    if (c.Name == model.CryptocurrencyType)
-                    {
+                foreach (Cryptocurrency c in cryptocurrencies) {
+                    if (c.Name == model.CryptocurrencyType) {
                         newCurrencies.Add(c);
                     }
                 }
