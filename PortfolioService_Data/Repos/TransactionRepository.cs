@@ -38,7 +38,8 @@ namespace PortfolioServiceStorage.Repos {
             return _table.ExecuteQuery(query);
         }
 
-        public void Delete(string cryptocurrencyName, string transactionType, double transactionAmountUSD, double transactionAmountCrypto, string transactionDateAndTime, string userEmail) {
+        public void Delete(string cryptocurrencyName, string transactionType, double transactionAmountUSD, double transactionAmountCrypto, string transactionDateAndTime, string userEmail)
+        {
             string filter1 = TableQuery.GenerateFilterCondition("CryptocurrencyName", QueryComparisons.Equal, cryptocurrencyName);
             string filter2 = TableQuery.GenerateFilterCondition("Type", QueryComparisons.Equal, transactionType);
             string filter3 = TableQuery.GenerateFilterCondition("AmountUSD", QueryComparisons.Equal, transactionAmountUSD.ToString());
@@ -57,10 +58,53 @@ namespace PortfolioServiceStorage.Repos {
             );
 
             TableQuery<Transaction> query = new TableQuery<Transaction>().Where(combinedFilter);
-            Transaction transactionToDelete = _table.ExecuteQuery(query).ToList()[0];
+            Transaction transactionToDelete = _table.ExecuteQuery(query).ToList().FirstOrDefault();
 
-            TableOperation operation = TableOperation.Delete(transactionToDelete);
-            _table.Execute(operation);
+            if (transactionToDelete != null)
+            {
+                // Postavite ETag na '*'
+                transactionToDelete.ETag = "*";
+
+                TableOperation operation = TableOperation.Delete(transactionToDelete);
+                _table.Execute(operation);
+            }
+        }
+
+        public void DeleteLastTransaction(string userEmail)
+        {
+            // Učitajte sve transakcije korisnika
+            IEnumerable<Transaction> userTransactions = ReadUsersTransactions(userEmail);
+
+            // Pronađite posljednju transakciju
+            Transaction lastTransaction = userTransactions.OrderByDescending(t => t.Timestamp).FirstOrDefault();
+
+            if (lastTransaction != null)
+            {
+                // Izvršite brisanje posljednje transakcije koristeći postojeću Delete metodu
+                Delete(
+                    lastTransaction.CryptocurrencyName,
+                    lastTransaction.Type,
+                    lastTransaction.AmountUSD,
+                    lastTransaction.AmountCrypto,
+                    lastTransaction.DateAndTime,
+                    lastTransaction.UserEmail
+                );
+            }
+        }
+
+        public void Delete(string partitionKey, string rowKey)
+        {
+            TableOperation retrieveOperation = TableOperation.Retrieve<Transaction>(partitionKey, rowKey);
+            TableResult retrievedResult = _table.Execute(retrieveOperation);
+
+            if (retrievedResult.Result is Transaction deleteEntity)
+            {
+                // Postavite ETag na '*'
+                deleteEntity.ETag = "*";
+
+                TableOperation deleteOperation = TableOperation.Delete(deleteEntity);
+                _table.Execute(deleteOperation);
+            }
         }
     }   
 }

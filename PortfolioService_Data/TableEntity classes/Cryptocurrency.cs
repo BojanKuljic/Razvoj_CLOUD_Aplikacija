@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace PortfolioServiceStorage.TableEntityClasses {
     public class Cryptocurrency : TableEntity {
-        public Cryptocurrency(string name, double initialAmount, double initialAmountUSD, string userEmail) {
+        public Cryptocurrency(string name, double initialAmount, double initialAmountUSD, string userEmail, bool isSelected = false) {
             this.PartitionKey = "CryptocurrencyPartition";
             this.RowKey = Guid.NewGuid().ToString();
             this.Name = name;
             this.Amount = initialAmount;
             this.ProfitOrLossUSD = -initialAmountUSD;
             this.UserEmail = userEmail;
+            this.IsSelected = isSelected;
         }
 
         public Cryptocurrency() { }
@@ -22,5 +23,6 @@ namespace PortfolioServiceStorage.TableEntityClasses {
         public double Amount { get; set; }
         public double ProfitOrLossUSD { get; set; }
         public string UserEmail { get; set; }
+        public bool IsSelected;
     }
 }

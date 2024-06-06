@@ -116,5 +116,45 @@ namespace PortfolioService.Controllers {
 
             return View("AddTransaction");
         }
+
+        [HttpPost]
+        public ActionResult DeleteLastTransaction()
+        {
+            if (Session["UserEmail"] == null)
+            {
+                return RedirectToAction("LogIn", "Account");
+            }
+
+            string userEmail = Session["UserEmail"] as string;
+
+            // Pozovite metodu za brisanje posljednje transakcije
+            transactionRepo.DeleteLastTransaction(userEmail);
+
+            // Nakon brisanja, preusmjerite korisnika na Index akcijsku metodu
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteSelectedCryptocurrencies(List<string> selectedCryptocurrencyNames)
+        {
+            if (Session["UserEmail"] == null)
+            {
+                return RedirectToAction("LogIn", "Account");
+            }
+
+            string userEmail = Session["UserEmail"] as string;
+
+            // Iterirajte kroz selektovane kriptovalute i obrišite ih
+            if (selectedCryptocurrencyNames.Count != 1)
+            {
+                selectedCryptocurrencyNames.Remove("check");
+                foreach (string cryptocurrencyName in selectedCryptocurrencyNames)
+                {
+                    cryptoRepo.Delete(cryptocurrencyName, userEmail);
+                }
+            }
+            // Nakon brisanja, preusmjerite korisnika na Index akcijsku metodu
+            return RedirectToAction("Index");
+        }
     }
 }
