@@ -8,7 +8,7 @@
     </ConfigurationSettings>
   </Role>
   <Role name="NotificationService">
-    <Instances count="1" />
+    <Instances count="3" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="SendGridApiKey" value="EZgqYO4XRBC9RZky-bEc_w.I-gD_ZAbIRXA-n1DgYVPTD4cVAFR6jnUKEPaLuPLuRs" />
@@ -16,7 +16,7 @@
     </ConfigurationSettings>
   </Role>
   <Role name="HealthMonitoringService">
-    <Instances count="1" />
+    <Instances count="2" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="DataConnectionString" value="UseDevelopmentStorage=true" />
