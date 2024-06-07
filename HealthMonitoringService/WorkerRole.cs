@@ -22,6 +22,7 @@ namespace HealthMonitoringService {
         private readonly IHealthConsoleService consoleService = new ChannelFactory<IHealthConsoleService>(
         new NetTcpBinding(),
         new EndpointAddress("net.tcp://localhost:8000/ConsoleService")).CreateChannel();
+        Random random = new Random();
 
         WCFChannel wcfChannel = new WCFChannel();
         HealthCheckRepository repo = new HealthCheckRepository();
@@ -62,8 +63,6 @@ namespace HealthMonitoringService {
         }
 
         private async Task RunAsync(CancellationToken cancellationToken) {
-            Random random = new Random();
-
             while (!cancellationToken.IsCancellationRequested) {
                 var portfolioServiceInstances = RoleEnvironment.Roles["PortfolioService"].Instances;
                 var notificationServiceInstances = RoleEnvironment.Roles["NotificationService"].Instances;
@@ -92,19 +91,19 @@ namespace HealthMonitoringService {
                 }
 
                 if (wcfChannel.HealthCheck(notificationServiceInstance.InstanceEndpoints["health-monitoring"].IPEndpoint.ToString())) {
-                    Trace.TraceInformation("NotificationService instance " + portfolioServiceInstanceIndex + " is alive");
+                    Trace.TraceInformation("NotificationService instance " + notificationServiceInstanceIndex + " is alive");
                     repo.Create(new HealthCheck(true, HealthCheckPartition.NotificationServicePartition));
                     serviceJustDiedNotification = false;
                 } else {
                     if (serviceJustDiedNotification == false)
                     {
-                        Trace.TraceInformation("NotificationService instance " + portfolioServiceInstanceIndex + " is dead (!)");
+                        Trace.TraceInformation("NotificationService instance " + notificationServiceInstanceIndex + " is dead (!)");
                         repo.Create(new HealthCheck(false, HealthCheckPartition.NotificationServicePartition));
                         serviceJustDiedNotification = await consoleService.SendEmails("NotificationService error!", "NotificationService instance " + portfolioServiceInstanceIndex + " is dead (!)"); ;
                     }
                     else
                     {
-                        Trace.TraceInformation("NotificationService instance " + portfolioServiceInstanceIndex + " is dead (!)");
+                        Trace.TraceInformation("NotificationService instance " + notificationServiceInstanceIndex + " is dead (!)");
                         repo.Create(new HealthCheck(false, HealthCheckPartition.NotificationServicePartition));
                     }
                 }
