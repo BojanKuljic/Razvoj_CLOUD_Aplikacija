@@ -25,19 +25,18 @@ namespace PortfolioService.Controllers {
 
             var cryptocurrencies = cryptoRepo.ReadUsersCryptocurrencies((string)Session["UserEmail"]);
 
-            if (cryptocurrencies.Count() == 0) {
-                ViewBag.Cryptocurrencies = null;
-                return View();
-            }
-
             List<string> deleteList = new List<string>();
-
             foreach (Cryptocurrency c in cryptocurrencies) {
                 if (c.Amount == 0) {
                     deleteList.Add("check");
                     deleteList.Add(c.Name);
                     DeleteSelectedCryptocurrenciesNoRefresh(deleteList);
                 }
+            }
+
+            if (cryptocurrencies.Count() == 0) {
+                ViewBag.Cryptocurrencies = null;
+                return View();
             }
 
             ViewBag.Cryptocurrencies = cryptocurrencies;
@@ -151,7 +150,7 @@ namespace PortfolioService.Controllers {
             }
 
             if (latestTransaction.Type == "Sale") {
-                cryptoRepo.UpdateAmountAndProfitOrLoss(userEmail, latestTransaction.CryptocurrencyName, "Purchase", -(latestTransaction.AmountUSD), -latestTransaction.AmountCrypto);
+                cryptoRepo.UpdateAmountAndProfitOrLoss(userEmail, latestTransaction.CryptocurrencyName, "Purchase", latestTransaction.AmountUSD, latestTransaction.AmountCrypto);
             } else {
                 cryptoRepo.UpdateAmountAndProfitOrLoss(userEmail, latestTransaction.CryptocurrencyName, "Sale", latestTransaction.AmountUSD, latestTransaction.AmountCrypto);
             }
