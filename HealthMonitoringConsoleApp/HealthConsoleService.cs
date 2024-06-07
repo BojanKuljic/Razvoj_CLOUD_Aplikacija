@@ -11,13 +11,13 @@ namespace HealthMonitoringConsoleApp
     {
         private static readonly EmailSender _sender = new EmailSender();
 
-        public async Task SendEmails(string emailSubject, string emailContent)
+        public async Task<bool> SendEmails(string emailSubject, string emailContent)
         {
             foreach(var email in HealthConsoleApp.EmailList)
             {
                 await _sender.Send(email, emailSubject, emailContent);
-                HealthConsoleApp.EmailList.Remove(email);
             }
+            return true;
         }
     }
 }

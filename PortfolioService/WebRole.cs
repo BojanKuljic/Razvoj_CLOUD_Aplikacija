@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using HealthMonitoringWCFInterface;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Diagnostics;
@@ -18,6 +19,8 @@ namespace PortfolioService {
 
             healthMonitoringServer = new HealthMonitoringServer();
             healthMonitoringServer.Open();
+
+            //Task.Delay(TimeSpan.FromSeconds(30)).ContinueWith(t => healthMonitoringServer.Close());
 
             return result;
         }

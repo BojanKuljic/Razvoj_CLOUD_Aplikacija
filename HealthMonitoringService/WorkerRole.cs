@@ -17,7 +17,8 @@ namespace HealthMonitoringService {
     public class WorkerRole : RoleEntryPoint {
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
-
+        private bool serviceJustDiedPortfolio = false;
+        private bool serviceJustDiedNotification = false;
         private readonly IHealthConsoleService consoleService = new ChannelFactory<IHealthConsoleService>(
         new NetTcpBinding(),
         new EndpointAddress("net.tcp://localhost:8000/ConsoleService")).CreateChannel();
@@ -75,19 +76,37 @@ namespace HealthMonitoringService {
                 if (wcfChannel.HealthCheck(portfolioServiceInstance.InstanceEndpoints["health-monitoring"].IPEndpoint.ToString())) {
                     Trace.TraceInformation("PortfolioService instance " + portfolioServiceInstanceIndex + " is alive");
                     repo.Create(new HealthCheck(true, HealthCheckPartition.PortfolioServicePartition));
+                    serviceJustDiedPortfolio = false;
                 } else {
-                    Trace.TraceInformation("PortfolioService instance " + portfolioServiceInstanceIndex + " is dead (!)");
-                    repo.Create(new HealthCheck(false, HealthCheckPartition.PortfolioServicePartition));
-                    await consoleService.SendEmails("PortfolioService error!" ,"PortfolioService instance " + portfolioServiceInstanceIndex + " is dead (!)");
+                    if(serviceJustDiedPortfolio == false)
+                    {
+                        Trace.TraceInformation("PortfolioService instance " + portfolioServiceInstanceIndex + " is dead (!)");
+                        repo.Create(new HealthCheck(false, HealthCheckPartition.PortfolioServicePartition));
+                        serviceJustDiedPortfolio = await consoleService.SendEmails("PortfolioService error!", "PortfolioService instance " + portfolioServiceInstanceIndex + " is dead (!)");
+                    }
+                    else
+                    {
+                        Trace.TraceInformation("PortfolioService instance " + portfolioServiceInstanceIndex + " is dead (!)");
+                        repo.Create(new HealthCheck(false, HealthCheckPartition.PortfolioServicePartition));
+                    }
                 }
 
                 if (wcfChannel.HealthCheck(notificationServiceInstance.InstanceEndpoints["health-monitoring"].IPEndpoint.ToString())) {
                     Trace.TraceInformation("NotificationService instance " + portfolioServiceInstanceIndex + " is alive");
                     repo.Create(new HealthCheck(true, HealthCheckPartition.NotificationServicePartition));
+                    serviceJustDiedNotification = false;
                 } else {
-                    Trace.TraceInformation("NotificationService instance " + portfolioServiceInstanceIndex + " is dead (!)");
-                    repo.Create(new HealthCheck(false, HealthCheckPartition.NotificationServicePartition));
-                    await consoleService.SendEmails("NotificationService error!", "NotificationService instance " + portfolioServiceInstanceIndex + " is dead (!)");
+                    if (serviceJustDiedNotification == false)
+                    {
+                        Trace.TraceInformation("NotificationService instance " + portfolioServiceInstanceIndex + " is dead (!)");
+                        repo.Create(new HealthCheck(false, HealthCheckPartition.NotificationServicePartition));
+                        serviceJustDiedNotification = await consoleService.SendEmails("NotificationService error!", "NotificationService instance " + portfolioServiceInstanceIndex + " is dead (!)"); ;
+                    }
+                    else
+                    {
+                        Trace.TraceInformation("NotificationService instance " + portfolioServiceInstanceIndex + " is dead (!)");
+                        repo.Create(new HealthCheck(false, HealthCheckPartition.NotificationServicePartition));
+                    }
                 }
 
                 await Task.Delay(5000);

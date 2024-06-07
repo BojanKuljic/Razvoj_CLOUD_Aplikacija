@@ -11,6 +11,6 @@ namespace HealthMonitoringConsoleApp
     public interface IHealthConsoleService
     {
         [OperationContract]
-        Task SendEmails(string emailSubject, string emailContent);
+        Task<bool> SendEmails(string emailSubject, string emailContent);
     }
 }
